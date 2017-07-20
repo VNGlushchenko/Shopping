@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html ng-app="shopping" ng-strict-di>
+<head>
+	<title>Shopping</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha256-ZT4HPpdCOt2lvDkXokHuhJfdOKSPFLzeAJik5U/Q+l4=" crossorigin="anonymous" />
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.5/angular-resource.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.6.5/angular-messages.js" integrity="sha256-a4plqu3MTtKkuOJygaGz1P7oCABA/67wFoeSGebUtyI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="app/app.core.js"></script>
+<script type="text/javascript">
+'use strict';
+$(document).ready(function() {
+    $.ajax({
+        type: "POST",
+        url: "app/php/getGoodsList.php",
+        success: function(data) {
+            let receivedData = JSON.parse(data),
+                categoryId = [],
+                categoryName = [],
+                productId = [],
+                productName = [];
+            // receivedData parsing
+            $.each(receivedData, function(index, value) {
+                if (index == 0) {
+                    value.forEach(function(item, i, value) {
+                        categoryId.push(item);
+                    });
+                } else if (index == 1) {
+                    value.forEach(function(item, i, value) {
+                        categoryName.push(item);
+                    });
+                } else if (index == 2) {
+                    value.forEach(function(item, i, value) {
+                        productId.push(item);
+                    });
+                } else {
+                    value.forEach(function(item, i, value) {
+                        productName.push(item);
+                    });
+                }
+            });
+            // distinct categoryIds elicitation
+            let elemForCheck = categoryId[0];
+            let posUniqueElemsArr = [0];
+
+            for (let i = 1; i < categoryId.length; i++) {
+                if (categoryId[i] == elemForCheck) {
+                    continue;
+                } else {
+                    posUniqueElemsArr.push(i);
+                    elemForCheck = categoryId[i];
+                }
+            }
+            // goodsCatalog creation
+            let goodsCatalog = [];
+            for (let i = 0; i < posUniqueElemsArr.length; i++) {
+                goodsCatalog[i] = {};
+                goodsCatalog[i]['category_id'] = categoryId[posUniqueElemsArr[i]];
+                goodsCatalog[i]['category_name'] = categoryName[posUniqueElemsArr[i]];
+                goodsCatalog[i]['products'] = [];
+            }
+            // products distribution among categories
+            for (let i = 0; i < goodsCatalog.length; i++) {
+                for (let j = 0; j < productId.length; j++) {
+                    if (
+                        (j >= posUniqueElemsArr[i] && j < posUniqueElemsArr[i + 1]) ||
+                        (i == posUniqueElemsArr.length - 1 && (j >= posUniqueElemsArr[i] && j < productId.length))
+                    ) {
+                        goodsCatalog[i].products.push({
+                            productId: productId[j],
+                            productName: productName[j]
+                        });
+                    }
+                }
+            }
+            console.dir(goodsCatalog);
+        }
+    })
+});
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function(){
+    var countries = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        // The url points to a json file that contains an array of country names
+        prefetch: '/examples/data/countries.json'
+    });
+    
+    // Initializing the typeahead with remote dataset
+    $('.typeahead').typeahead(null, {
+        name: 'countries',
+        source: countries,
+        limit: 10 /* Specify maximum number of suggestions to be displayed */
+    });
+});  
+</script> -->
+</body>
+</html>
