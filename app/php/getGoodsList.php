@@ -7,6 +7,7 @@ $query = "
                t1.product_name
           FROM tGoods           as t1
           JOIN tGoodsCategories as t2 on t2.category_id = t1.category_id
+         WHERE t1.category_id <> 4 
          ORDER BY t2.category_name, 
                   t1.product_name
           ";
