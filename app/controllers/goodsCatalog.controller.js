@@ -13,31 +13,12 @@
         vm.goodsCatalog = [];
         GoodsCatalogFactory.getAllGoods().then(
             (response) => {
-                let receivedData = response.data,
-                    categoryId = [],
-                    categoryName = [],
-                    productId = [],
-                    productName = [];
-                // receivedData parsing
-                $.each(receivedData, function(index, value) {
-                    if (index == 0) {
-                        value.forEach(function(item, i, value) {
-                            categoryId.push(item);
-                        });
-                    } else if (index == 1) {
-                        value.forEach(function(item, i, value) {
-                            categoryName.push(item);
-                        });
-                    } else if (index == 2) {
-                        value.forEach(function(item, i, value) {
-                            productId.push(item);
-                        });
-                    } else {
-                        value.forEach(function(item, i, value) {
-                            productName.push(item);
-                        });
-                    }
-                });
+                let receivedData = response.data;
+                let categoryId = receivedData[0];
+                let categoryName = receivedData[1];
+                let productId = receivedData[2];
+                let productName = categoryId[3];
+                
                 // distinct categoryIds elicitation
                 let elemForCheck = categoryId[0];
                 let posUniqueElemsArr = [0];
