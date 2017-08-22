@@ -5,13 +5,12 @@
 
   function appTypeahead() {
     return {
-      restrict: 'E',
+      restrict: 'A',
       controller: 'AppTypeaheadController',
       controllerAs: 'atc',
-      templateUrl: 'app/components/app-typeahead.template.html',
       link: function(scope, elem, attrs, ctrl) {
         let typeaheadOptions = [];
-        let goodsListLength = ctrl.goodsCatalog;
+        let goodsListLength = ctrl.model.goodsCatalog;
 
         typeaheadOptions.push({ highlight: true });
 
@@ -22,18 +21,19 @@
             source: new Bloodhound({
               datumTokenizer: Bloodhound.tokenizers.obj.whitespace('category'),
               queryTokenizer: Bloodhound.tokenizers.whitespace,
-              local: ctrl.goodsCatalog[i].products[1]
+              local: ctrl.model.goodsCatalog[i].products[1]
             }),
             templates: {
               header:
                 '<h3 class="category-name">' +
-                ctrl.goodsCatalog[i].category_name +
+                ctrl.model.goodsCatalog[i].category_name +
                 '</h3>'
             }
           });
         }
 
-        elem.typeahead(...typeaheadOptions);
+        ctrl.menu.initTypeahead(...typeaheadOptions);
+        console.log(typeaheadOptions);
       }
     };
   }

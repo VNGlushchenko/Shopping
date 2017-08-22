@@ -5,12 +5,22 @@
     .module('shopping')
     .controller('AppTypeaheadController', AppTypeaheadController);
 
-  AppTypeaheadController.$inject = ['GoodsCatalogModel'];
+  AppTypeaheadController.$inject = ['GoodsCatalogModel', '$element'];
 
-  function AppTypeaheadController(GoodsCatalogModel) {
+  function AppTypeaheadController(GoodsCatalogModel, $element) {
     let vm = this;
 
-    vm.goodsCatalog = [];
+    vm.model = {
+      goodsCatalog: []
+    };
+
+    vm.menu = {
+      initTypeahead: initTypeahead
+    };
+
+    function initTypeahead(params) {
+      $($element).typeahead(params);
+    }
 
     activate();
 
@@ -56,7 +66,7 @@
               }
             }
           }
-          vm.goodsCatalog = goodsCatalog;
+          vm.model.goodsCatalog = goodsCatalog;
         },
         error => console.log(error)
       );
