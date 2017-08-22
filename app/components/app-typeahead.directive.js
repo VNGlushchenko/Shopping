@@ -9,33 +9,13 @@
       controller: 'AppTypeaheadController',
       controllerAs: 'atc',
       link: function(scope, elem, attrs, ctrl) {
-        let typeaheadOptions = [];
-        let goodsListLength = ctrl.model.goodsCatalog.length;
-        console.log('from link 1');
-        console.log(goodsListLength);
-        typeaheadOptions.push({ highlight: true });
-
-        for (let i = 0; i < goodsListLength; i++) {
-          typeaheadOptions.push({
-            name: 'category-' + i + 1,
-            display: 'category',
-            source: new Bloodhound({
-              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('category'),
-              queryTokenizer: Bloodhound.tokenizers.whitespace,
-              local: ctrl.model.goodsCatalog[i].products[1]
-            }),
-            templates: {
-              header:
-                '<h3 class="category-name">' +
-                ctrl.model.goodsCatalog[i].category_name +
-                '</h3>'
-            }
-          });
-        }
-
-        ctrl.menu.initTypeahead(...typeaheadOptions);
-        console.log('from link 2');
-        console.log(typeaheadOptions);
+        console.log(new Date().getTime());
+        console.log('from link ctrl.model');
+        console.log(ctrl.model);
+        console.log(new Date().getTime());
+        console.log('from link ctrl.model.typeaheadOptions');
+        console.log(ctrl.model.typeaheadOptions);
+        ctrl.menu.initTypeahead(...ctrl.model.typeaheadOptions);
       }
     };
   }

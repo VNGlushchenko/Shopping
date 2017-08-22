@@ -11,7 +11,8 @@
     let vm = this;
 
     vm.model = {
-      goodsCatalog: []
+      goodsCatalog: [],
+      typeaheadOptions: []
     };
 
     vm.menu = {
@@ -67,8 +68,42 @@
             }
           }
           vm.model.goodsCatalog = goodsCatalog;
-          console.log('from controller');
+          console.log(new Date().getTime());
+          console.log('from controller.activate');
           console.log(vm.model.goodsCatalog);
+
+          //createTypeaheadOptions
+          let typeaheadOptions = [];
+          let goodsListLength = vm.model.goodsCatalog.length;
+          console.log(new Date().getTime());
+          console.log('from controller.createTypeaheadOptions 1');
+          console.log(goodsListLength);
+          typeaheadOptions.push({ highlight: true });
+
+          for (let i = 0; i < goodsListLength; i++) {
+            typeaheadOptions.push({
+              name: 'category-' + i + 1,
+              display: 'category',
+              source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace(
+                  'category'
+                ),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: vm.model.goodsCatalog[i].products[1]
+              }),
+              templates: {
+                header:
+                  '<h3 class="category-name">' +
+                  vm.model.goodsCatalog[i].category_name +
+                  '</h3>'
+              }
+            });
+          }
+
+          vm.model.typeaheadOptions = typeaheadOptions;
+          console.log(new Date().getTime());
+          console.log('from controller.createTypeaheadOptions 2');
+          console.log(vm.model.typeaheadOptions);
         },
         error => console.log(error)
       );
