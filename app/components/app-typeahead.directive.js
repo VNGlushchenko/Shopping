@@ -10,8 +10,9 @@
       controllerAs: 'atc',
       link: function(scope, elem, attrs, ctrl) {
         let typeaheadOptions = [];
-        let goodsListLength = ctrl.model.goodsCatalog;
-
+        let goodsListLength = ctrl.model.goodsCatalog.length;
+        console.log('from link 1');
+        console.log(goodsListLength);
         typeaheadOptions.push({ highlight: true });
 
         for (let i = 0; i < goodsListLength; i++) {
@@ -33,6 +34,7 @@
         }
 
         ctrl.menu.initTypeahead(...typeaheadOptions);
+        console.log('from link 2');
         console.log(typeaheadOptions);
       }
     };

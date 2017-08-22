@@ -67,6 +67,8 @@
             }
           }
           vm.model.goodsCatalog = goodsCatalog;
+          console.log('from controller');
+          console.log(vm.model.goodsCatalog);
         },
         error => console.log(error)
       );
