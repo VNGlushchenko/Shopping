@@ -1,3 +1,5 @@
 shopping.xlsx
 purchases.sql
 dist/
+node_modules/
+bower_components/

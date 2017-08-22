@@ -1,41 +1,27 @@
 <!DOCTYPE html>
 <html ng-app="shopping" ng-strict-di>
+
 <head>
-	<title>Shopping</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha256-ZT4HPpdCOt2lvDkXokHuhJfdOKSPFLzeAJik5U/Q+l4=" crossorigin="anonymous" />
+    <title>Shopping</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 </head>
+
 <body>
-<div ng-controller="GoodsCatalogCtrl as gc" ng-cloak>
-    {{gc.goodsCatalog}}
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.5/angular-resource.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.6.5/angular-messages.js" integrity="sha256-a4plqu3MTtKkuOJygaGz1P7oCABA/67wFoeSGebUtyI=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
-<script src="app/app.core.js"></script>
-<script src="app/factories/goodsCatalog.factory.js"></script>
-<script src="app/controllers/goodsCatalog.controller.js"></script>
-<!-- <script type="text/javascript">
-$(document).ready(function(){
-    var countries = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        // The url points to a json file that contains an array of country names
-        prefetch: '/examples/data/countries.json'
-    });
-    
-    // Initializing the typeahead with remote dataset
-    $('.typeahead').typeahead(null, {
-        name: 'countries',
-        source: countries,
-        limit: 10 /* Specify maximum number of suggestions to be displayed */
-    });
-});  
-</script> -->
+    <app-typeahead></app-typeahead>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/ng-dialog/js/ngDialog.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/typeahead.js/dist/typeahead.bundle.min.js"></script>
+    <script src="app/core.module.js"></script>
+    <script src="app/models/goods_catalog.model.js"></script>
+    <script src="app/components/app-typeahead.controller.js"></script>
+    <script src="app/components/app-typeahead.directive.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,20 @@
+{
+  "name": "shopping",
+  "description": "Training project",
+  "main": "index.html",
+  "keywords": ["shopping", "list", "goods"],
+  "authors": ["Vladimir Glushchenko"],
+  "license": "MIT",
+  "homepage": "https://github.com/VNGlushchenko/Shopping/blob/master/README.md",
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
+  "dependencies": {
+    "bootstrap": "~3.3.7",
+    "jquery": "~3.2.1",
+    "ng-dialog": "~1.4.0",
+    "angular": "~1.6.5",
+    "angular-ui-router": "~1.0.6",
+    "angular-resource": "~1.6.5",
+    "angular-messages": "~1.6.5",
+    "typeahead.js": "~0.11.1"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "shopping",
+  "version": "1.0.0",
+  "description": "Training project",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VNGlushchenko/Shopping.git"
+  },
+  "keywords": ["shopping", "list", "goods"],
+  "author": "Vladimir Glushchenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VNGlushchenko/Shopping/issues"
+  },
+  "homepage": "https://github.com/VNGlushchenko/Shopping#readme",
+  "devDependencies": {
+    "gulp": "~3.9.1",
+    "gulp-concat": "~2.6.1",
+    "gulp-jscs": "~4.0.0",
+    "gulp-jshint": "~2.0.4",
+    "gulp-main-bower-files": "~1.6.2",
+    "gulp-main-npm-files": "~1.0.5",
+    "jshint": "~2.9.5"
+  }
+}
