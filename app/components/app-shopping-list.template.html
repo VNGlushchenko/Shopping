@@ -1,3 +1,11 @@
-<div id="multiple-datasets" ng-cloak>
-    <input app-typeahead class="typeahead" type="text" placeholder="Enter a product name">
+<div class="container">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-xs-12 col-sm-3">
+            <div id="multiple-datasets">
+                <input ng-model="shoppingList" app-typeahead class="typeahead" type="text" placeholder="Введите название товара">
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Изменить шаблон - сделать директиву родительскую и сиблинг для typeahead -->

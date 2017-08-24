@@ -12,19 +12,21 @@
 
     vm.model = {
       goodsCatalog: [],
-      typeaheadOptions: []
+      typeaheadOptions: [],
+      shoppingList: []
     };
 
     vm.menu = {
+      searchGoodsCategory: searchGoodsCategory,
       initTypeahead: initTypeahead,
       activate: activate
     };
 
+    function searchGoodsCategory(productName) {}
+
     function initTypeahead(params) {
       $($element).typeahead(...params);
     }
-
-    //activate();
 
     function activate() {
       return GoodsCatalogModel.getAllGoods().then(
@@ -69,16 +71,10 @@
             }
           }
           vm.model.goodsCatalog = goodsCatalog;
-          console.log(new Date().getTime());
-          console.log('from controller.activate');
-          console.log(JSON.stringify(vm.model.goodsCatalog));
 
           //createTypeaheadOptions
           let typeaheadOptions = [];
           let goodsListLength = vm.model.goodsCatalog.length;
-          console.log(new Date().getTime());
-          console.log('from controller.createTypeaheadOptions 1');
-          console.log(JSON.stringify(goodsListLength));
           typeaheadOptions.push({
             highlight: true
           });
@@ -88,9 +84,7 @@
               name: 'category-' + i + 1,
               display: 'category',
               source: new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace(
-                  'category'
-                ),
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 local: vm.model.goodsCatalog[i].products[1]
               }),
@@ -99,19 +93,16 @@
                   '<h3 class="category-name">' +
                   vm.model.goodsCatalog[i].category_name +
                   '</h3>',
-                  suggestion: function(q) {
-                    return '<div>' + q + '</div>'
-                  }
+                suggestion: function(q) {
+                  return '<div>' + q + '</div>';
+                }
               }
             });
           }
 
           vm.model.typeaheadOptions = typeaheadOptions;
-          console.log(new Date().getTime());
-          console.log('from controller.createTypeaheadOptions 2');
-          console.log(JSON.stringify(vm.model.typeaheadOptions));
           return $q(function(resolve, reject) {
-            resolve('Some Success Data');
+            resolve('OK');
           });
         },
         error => console.log(error)
