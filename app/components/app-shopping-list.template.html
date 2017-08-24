@@ -3,9 +3,18 @@
         <div class="col-xs-12 col-sm-4">
             <div id="multiple-datasets">
                 <input ng-model="shoppingList" app-typeahead class="typeahead" type="text" placeholder="Введите название товара">
-
-                <button type="button" class="btn btn-default" style="margin-top: 12px;"><span class="glyphicon glyphicon-plus" style="color: green;"></span></button>
-
+                <!-- Добавить тултип -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" style="margin-top: 12px;" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <span class="glyphicon glyphicon-plus" style="color: green;"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Аксессуары</a></li>
+                        <li><a href="#">Дом</a></li>
+                        <li><a href="#">Еда</a></li>
+                        <li><a href="#">Здоровье</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
