@@ -14,10 +14,8 @@
           .then(() => ctrl.menu.initTypeahead(ctrl.model.typeaheadOptions));
 
         elem.bind('typeahead:select', function(event, suggestion) {
-          console.log(ctrl.model.shoppingList);
           ctrl.model.shoppingList.push(suggestion);
           console.log(ctrl.model.shoppingList);
-          scope.$apply;
         });
       }
     };

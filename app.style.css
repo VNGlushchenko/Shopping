@@ -1,87 +1,87 @@
 header a {
-    color: lightgrey;
-    text-decoration: none;
+  color: lightgrey;
+  text-decoration: none;
 }
 
 header a:hover,
 header a:visited {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 header div.col-sm-6 {
-    padding: 5px 50px;
+  padding: 5px 50px;
 }
 
 [ui-view] {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 #multiple-datasets .category-name {
-    margin: 0 20px 5px 20px;
-    padding: 3px 0;
-    border-bottom: 1px solid #ccc;
-    font-weight: bold;
+  margin: 0 20px 5px 20px;
+  padding: 3px 0;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
 }
 
 .typeahead,
 .tt-hint {
-    width: 250px;
-    height: 35px;
-    padding: 8px 12px;
-    font-size: 18px;
-    line-height: 30px;
-    border: 2px solid #ccc;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    outline: none;
+  width: 250px;
+  height: 35px;
+  padding: 8px 12px;
+  font-size: 18px;
+  line-height: 30px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  outline: none;
 }
 
 .typeahead {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .typeahead:focus {
-    border: 2px solid #0097cf;
+  border: 2px solid #0097cf;
 }
 
 .tt-hint {
-    color: #999;
+  color: #999;
 }
 
 .tt-menu {
-    width: 250px;
-    margin: 12px 0;
-    padding: 8px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  width: 250px;
+  margin: 12px 0;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .tt-suggestion {
-    padding: 3px 20px;
-    font-size: 18px;
-    line-height: 24px;
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
 }
 
 .tt-suggestion:hover {
-    cursor: pointer;
-    color: #fff;
-    background-color: #0097cf;
+  cursor: pointer;
+  color: #fff;
+  background-color: #0097cf;
 }
 
 .tt-suggestion.tt-cursor {
-    color: #fff;
-    background-color: #0097cf;
+  color: #fff;
+  background-color: #0097cf;
 }
 
 .tt-suggestion p {
-    margin: 0;
+  margin: 0;
 }
