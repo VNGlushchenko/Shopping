@@ -10,15 +10,16 @@
       controllerAs: 'atc',
       link: function(scope, elem, attrs, ctrl) {
         ctrl.menu
-          .activate()
-          .then(ctrl.menu.initTypeahead(...ctrl.model.typeaheadOptions));
-        console.log(new Date().getTime());
-        console.log('from link ctrl.model');
-        console.log(JSON.stringify(ctrl.model));
-        console.log(new Date().getTime());
-        console.log('from link ctrl.model.typeaheadOptions');
-        console.log(JSON.stringify(ctrl.model.typeaheadOptions));
-        //ctrl.menu.initTypeahead(...ctrl.model.typeaheadOptions);
+        .activate()
+        .then(
+            () => ctrl.menu.initTypeahead(ctrl.model.typeaheadOptions)
+        );
+      console.log(new Date().getTime());
+      console.log('from link ctrl.model');
+      console.log(JSON.stringify(ctrl.model));
+      console.log(new Date().getTime());
+      console.log('from link ctrl.model.typeaheadOptions');
+      console.log(JSON.stringify(ctrl.model.typeaheadOptions));
       }
     };
   }

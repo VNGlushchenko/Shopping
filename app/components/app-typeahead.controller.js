@@ -21,7 +21,7 @@
     };
 
     function initTypeahead(params) {
-      $($element).typeahead(params);
+      $($element).typeahead(...params);
     }
 
     //activate();
@@ -98,7 +98,10 @@
                 header:
                   '<h3 class="category-name">' +
                   vm.model.goodsCatalog[i].category_name +
-                  '</h3>'
+                  '</h3>',
+                  suggestion: function(q) {
+                    return '<div>' + q + '</div>'
+                  }
               }
             });
           }

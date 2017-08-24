@@ -10,11 +10,11 @@
       $stateProvider
         .state('shoppingList', {
           url: '/',
-          component: 'shoppingList'
+          component: 'appShoppingList'
         })
         .state('shoppingStatistics', {
           url: '/statistics',
-          component: 'shoppingStatistics'
+          component: 'appShoppingStatistics'
         });
     }
   ]);

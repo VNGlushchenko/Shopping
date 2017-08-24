@@ -3,15 +3,44 @@
 
 <head>
     <title>Shopping</title>
+    <base href="/">
     <meta charset="utf-8">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <style>
+        header a {
+            color: lightgrey;
+            text-decoration: none;
+        }
+
+        header a:hover,
+        header a:visited {
+            color: white;
+            text-decoration: none;
+        }
+
+        header div.col-sm-6 {
+            padding: 5px 50px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="multiple-datasets" ng-cloak>
-        <input app-typeahead class="typeahead" type="text" placeholder="Enter a product name">
-    </div>
+    <header>
+        <div class="container-fluid">
+            <div class="row" style="background-color: black; font-size: 1.3em; ">
+                <div class="col-sm-6 text-right">
+                    <a ui-sref="shoppingList">Shopping list</a>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <a ui-sref="shoppingStatistics">Shopping statistics</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <ui-view></ui-view>
+
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -22,6 +51,7 @@
     <script src="bower_components/typeahead.js/dist/typeahead.bundle.min.js"></script>
     <script src="app/core.module.js"></script>
     <script src="app/models/goods_catalog.model.js"></script>
+    <script src="app/routing.js"></script>
     <script src="app/components/app-typeahead.controller.js"></script>
     <script src="app/components/app-typeahead.directive.js"></script>
 </body>
