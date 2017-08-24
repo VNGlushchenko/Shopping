@@ -5,9 +5,9 @@
     .module('shopping')
     .controller('AppTypeaheadController', AppTypeaheadController);
 
-  AppTypeaheadController.$inject = ['GoodsCatalogModel', '$element'];
+  AppTypeaheadController.$inject = ['GoodsCatalogModel', '$element', '$q'];
 
-  function AppTypeaheadController(GoodsCatalogModel, $element) {
+  function AppTypeaheadController(GoodsCatalogModel, $element, $q) {
     let vm = this;
 
     vm.model = {
@@ -16,17 +16,18 @@
     };
 
     vm.menu = {
-      initTypeahead: initTypeahead
+      initTypeahead: initTypeahead,
+      activate: activate
     };
 
     function initTypeahead(params) {
       $($element).typeahead(params);
     }
 
-    activate();
+    //activate();
 
     function activate() {
-      GoodsCatalogModel.getAllGoods().then(
+      return GoodsCatalogModel.getAllGoods().then(
         response => {
           let receivedData = response.data;
           let categoryId = receivedData[0];
@@ -70,15 +71,17 @@
           vm.model.goodsCatalog = goodsCatalog;
           console.log(new Date().getTime());
           console.log('from controller.activate');
-          console.log(vm.model.goodsCatalog);
+          console.log(JSON.stringify(vm.model.goodsCatalog));
 
           //createTypeaheadOptions
           let typeaheadOptions = [];
           let goodsListLength = vm.model.goodsCatalog.length;
           console.log(new Date().getTime());
           console.log('from controller.createTypeaheadOptions 1');
-          console.log(goodsListLength);
-          typeaheadOptions.push({ highlight: true });
+          console.log(JSON.stringify(goodsListLength));
+          typeaheadOptions.push({
+            highlight: true
+          });
 
           for (let i = 0; i < goodsListLength; i++) {
             typeaheadOptions.push({
@@ -103,7 +106,10 @@
           vm.model.typeaheadOptions = typeaheadOptions;
           console.log(new Date().getTime());
           console.log('from controller.createTypeaheadOptions 2');
-          console.log(vm.model.typeaheadOptions);
+          console.log(JSON.stringify(vm.model.typeaheadOptions));
+          return $q(function(resolve, reject) {
+            resolve('Some Success Data');
+          });
         },
         error => console.log(error)
       );
