@@ -1,35 +1,33 @@
 (function() {
   'use strict';
 
-  angular
-    .module('shopping')
-    .controller('AppTypeaheadController', AppTypeaheadController);
+  angular.module('shopping').factory('ShoppingModel', ShoppingModel);
 
-  AppTypeaheadController.$inject = ['GoodsCatalogModel', '$element', '$q'];
+  ShoppingModel.$inject = ['$http', 'apiUrl', '$q'];
 
-  function AppTypeaheadController(GoodsCatalogModel, $element, $q) {
+  function ShoppingModel($http, apiUrl, $q) {
     let vm = this;
 
-    vm.model = {
-      goodsCatalog: [],
-      typeaheadOptions: [],
-      shoppingList: []
+    vm.shopping = {
+      model: {
+        goodsCatalog: [],
+        shoppingList: [],
+        categoriesList: []
+      },
+      menu: {
+        getAllGoods: getAllGoods,
+        createGoodsCatalog: createGoodsCatalog
+      }
     };
 
-    vm.menu = {
-      searchGoodsCategory: searchGoodsCategory,
-      initTypeahead: initTypeahead,
-      activate: activate
-    };
+    return vm.shopping;
 
-    function searchGoodsCategory(productName) {}
-
-    function initTypeahead(params) {
-      $($element).typeahead(...params);
+    function getAllGoods() {
+      return $http.get(`${apiUrl}/getGoodsList.php`);
     }
 
-    function activate() {
-      return GoodsCatalogModel.getAllGoods().then(
+    function createGoodsCatalog() {
+      return vm.shopping.menu.getAllGoods().then(
         response => {
           let receivedData = response.data;
           let categoryId = receivedData[0];
@@ -55,6 +53,14 @@
             goodsCatalog[i] = {};
             goodsCatalog[i].category_id = categoryId[posUniqueElemsArr[i]];
             goodsCatalog[i].category_name = categoryName[posUniqueElemsArr[i]];
+            //----------------------
+            vm.shopping.model.categoriesList[i] = {};
+            vm.shopping.model.categoriesList[i].category_id =
+              goodsCatalog[i].category_id;
+            vm.shopping.model.categoriesList[i].category_name =
+              goodsCatalog[i].category_name;
+            //----------------------Проверить два раза Хобби пишется!!!!!!!!!!!!!!!
+            vm.shopping.model.categoriesList.push(goodsCatalog[i]);
             goodsCatalog[i].products = [[], []];
           }
           // products distribution among categories
@@ -70,37 +76,9 @@
               }
             }
           }
-          vm.model.goodsCatalog = goodsCatalog;
 
-          //createTypeaheadOptions
-          let typeaheadOptions = [];
-          let goodsListLength = vm.model.goodsCatalog.length;
-          typeaheadOptions.push({
-            highlight: true
-          });
-
-          for (let i = 0; i < goodsListLength; i++) {
-            typeaheadOptions.push({
-              name: 'category-' + i + 1,
-              display: 'category',
-              source: new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: vm.model.goodsCatalog[i].products[1]
-              }),
-              templates: {
-                header:
-                  '<h3 class="category-name">' +
-                  vm.model.goodsCatalog[i].category_name +
-                  '</h3>',
-                suggestion: function(q) {
-                  return '<div>' + q + '</div>';
-                }
-              }
-            });
-          }
-
-          vm.model.typeaheadOptions = typeaheadOptions;
+          vm.shopping.model.goodsCatalog = goodsCatalog;
+          console.log(vm.shopping);
           return $q(function(resolve, reject) {
             resolve('OK');
           });
