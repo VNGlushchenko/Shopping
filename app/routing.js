@@ -10,7 +10,7 @@
       $stateProvider
         .state('shoppingList', {
           url: '/',
-          component: 'appShoppingList'
+          templateUrl: 'app/components/app-shopping-list.template.html'
         })
         .state('shoppingStatistics', {
           url: '/statistics',

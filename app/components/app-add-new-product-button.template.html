@@ -1,0 +1,16 @@
+<div class="btn-group">
+    <button type="button" data-placement="bottom" title="Создать новый товар" class="btn btn-default dropdown-toggle tooltip"
+        style="border-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-plus" style="color: green;"></span></button>
+    <ul class="dropdown-menu" ng-repeat="category in anpbCtrl.shopping.model.categoriesList">
+        <li><a href="#">{{category.category_name}}</a></li>
+    </ul>
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" ng-model="anpbCtrl.model.newCategory" class="form-control" placeholder="Создать новую категорию">
+        </div>
+        <button type="submit" data-placement="bottom" title="Создать новую категорию" class="btn btn-default tooltip" style="border-radius: 0;"
+            ng-click="anpbCtrl.shopping.menu.createNewCategory(anpbCtrl.model.newCategory)">
+            <span class="glyphicon glyphicon-plus" style="color: green;"></span></button>
+    </form>
+</div>

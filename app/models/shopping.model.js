@@ -16,6 +16,7 @@
       },
       menu: {
         getAllGoods: getAllGoods,
+        createNewCategory: createNewCategory,
         createGoodsCatalog: createGoodsCatalog
       }
     };
@@ -26,6 +27,9 @@
       return $http.get(`${apiUrl}/getGoodsList.php`);
     }
 
+    function createNewCategory(params) {
+      console.log(params); //return $http.post(`${apiUrl}/createNewCategory.php`, params);
+    }
     function createGoodsCatalog() {
       return vm.shopping.menu.getAllGoods().then(
         response => {
@@ -53,15 +57,13 @@
             goodsCatalog[i] = {};
             goodsCatalog[i].category_id = categoryId[posUniqueElemsArr[i]];
             goodsCatalog[i].category_name = categoryName[posUniqueElemsArr[i]];
-            //----------------------
+            goodsCatalog[i].products = [[], []];
+            // categoriesList filling
             vm.shopping.model.categoriesList[i] = {};
             vm.shopping.model.categoriesList[i].category_id =
               goodsCatalog[i].category_id;
             vm.shopping.model.categoriesList[i].category_name =
               goodsCatalog[i].category_name;
-            //----------------------Проверить два раза Хобби пишется!!!!!!!!!!!!!!!
-            vm.shopping.model.categoriesList.push(goodsCatalog[i]);
-            goodsCatalog[i].products = [[], []];
           }
           // products distribution among categories
           for (let i = 0; i < goodsCatalog.length; i++) {
@@ -78,7 +80,7 @@
           }
 
           vm.shopping.model.goodsCatalog = goodsCatalog;
-          console.log(vm.shopping);
+
           return $q(function(resolve, reject) {
             resolve('OK');
           });
