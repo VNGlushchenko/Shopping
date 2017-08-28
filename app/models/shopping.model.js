@@ -24,12 +24,13 @@
     return vm.shopping;
 
     function getAllGoods() {
-      return $http.get(`${apiUrl}/getGoodsList.php`);
+      return $http.get(`${apiUrl}/getGoodsCatalog.php`);
     }
 
-    function createNewCategory(params) {
-      console.log(params); //return $http.post(`${apiUrl}/createNewCategory.php`, params);
+    function createNewCategory(data) {
+      return $http.post(`${apiUrl}/createNewGoodsCategory.php`, data);
     }
+
     function createGoodsCatalog() {
       return vm.shopping.menu.getAllGoods().then(
         response => {
