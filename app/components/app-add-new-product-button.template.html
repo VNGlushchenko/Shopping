@@ -1,18 +1,23 @@
 <div class="btn-group">
-    <button id="new-product-tooltip" type="button" data-placement="right" title="Создать новый товар" class="btn btn-default dropdown-toggle"
+    <button id="new-product-tooltip" type="button" data-placement="auto right" title="Создать новый товар" class="btn btn-default dropdown-toggle"
         style="border-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus" style="color: green;"></span></button>
     <ul class="dropdown-menu" style="width: 240px;">
-        <li class="disabled" style="cursor: none;"><a href="#"><strong>Выберите категорию:</strong></a></li>
-        <li ng-repeat="category in anpbCtrl.shopping.model.categoriesList"><a href="#">{{category.category_name}}</a></li>
-        <li>
+        <li class="disabled" id="not-allowed-li-choose-category">
+            <a href="#" id="not-allowed-url-choose-category" style="cursor: default;">
+                <strong id="not-allowed-url-choose-category-text">Выберите категорию:</strong>
+            </a>
+        </li>
+        <li ng-repeat="category in anpbCtrl.shopping.model.categoriesList">
+            <a href="#">{{category.category_name}}</a>
+        </li>
+        <li id="li-create-category">
             <form class="form-inline">
-                <div class="form-group input-group-sm" style="padding-left:20px; padding-top:3px; padding-bottom:3px;">
+                <div id="div-create-category" class="form-group input-group-sm" style="padding-left:20px; padding-top:3px; padding-bottom:3px;">
                     <input type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию" style="border-radius: 0;">
                 </div>
-                <button type="submit" data-placement="right" title="Создать новую категорию" id="new-category-tooltip" class="btn btn-sm"
-                    style="border-radius: 0;" ng-click="anpbCtrl.menu.createNewCategory(anpbCtrl.model)">
-                    <span class="glyphicon glyphicon-plus" id="new-category-tooltip-span" style="color: green;"></span>
+                <button type="submit" id="new-category" class="btn btn-sm" style="border-radius: 0;" ng-click="anpbCtrl.menu.createNewCategory(anpbCtrl.model)">
+                    <span class="glyphicon glyphicon-plus" id="new-category-span" style="color: green;"></span>
                 </button>
             </form>
         </li>

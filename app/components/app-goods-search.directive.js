@@ -14,7 +14,7 @@
         });
 
         elem.bind('typeahead:select', function(event, suggestion) {
-          ctrl.shopping.model.shoppingList.push(suggestion);
+          ctrl.shopping.model.shoppingList.push({ product: suggestion });
         });
       }
     };

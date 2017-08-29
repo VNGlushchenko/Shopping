@@ -22,17 +22,11 @@
           };
           vm.menu = {
             initTooltip: initTooltip,
-            hideTooltip: hideTooltip,
             createNewCategory: createNewCategory
           };
 
           function initTooltip() {
             $('#new-product-tooltip').tooltip();
-            $('#new-category-tooltip').tooltip();
-          }
-
-          function hideTooltip() {
-            $('#new-product-tooltip').tooltip('hide');
           }
 
           function createNewCategory(data) {
@@ -70,8 +64,13 @@
 
         elem.bind('hide.bs.dropdown', function(e) {
           if (
-            lastClickedElem == 'new-category-tooltip-span' ||
-            lastClickedElem == 'new-category-tooltip'
+            lastClickedElem == 'new-category-span' ||
+            lastClickedElem == 'new-category' ||
+            lastClickedElem == 'not-allowed-li-choose-category' ||
+            lastClickedElem == 'not-allowed-url-choose-category' ||
+            lastClickedElem == 'not-allowed-url-choose-category-text' ||
+            lastClickedElem == 'li-create-category' ||
+            lastClickedElem == 'div-create-category'
           ) {
             e.preventDefault();
           }
