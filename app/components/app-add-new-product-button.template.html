@@ -6,9 +6,9 @@
         <li class="disabled" style="cursor: none;"><a href="#"><strong>Выберите категорию:</strong></a></li>
         <li ng-repeat="category in anpbCtrl.shopping.model.categoriesList"><a href="#">{{category.category_name}}</a></li>
         <li>
-            <form class="form-inline" style="padding-top: 3px; padding-left: 20px; padding-bottom: 3px">
-                <div class="form-group input-group-sm">
-                    <input type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию">
+            <form class="form-inline">
+                <div class="form-group input-group-sm" style="padding-left:20px; padding-top:3px; padding-bottom:3px;">
+                    <input type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию" style="border-radius: 0;">
                 </div>
                 <button type="submit" data-placement="right" title="Создать новую категорию" id="new-category-tooltip" class="btn btn-sm"
                     style="border-radius: 0;" ng-click="anpbCtrl.menu.createNewCategory(anpbCtrl.model)">

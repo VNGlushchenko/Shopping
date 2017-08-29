@@ -1,14 +1,16 @@
-<div class="container">
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-sm-3" style="padding-right: 0;">
-            <div id="multiple-datasets">
-                <input ng-model="shoppingList" app-goods-search class="typeahead" type="text" placeholder="Введите название товара">
-            </div>
+<div class="container-fluid" style="margin-top:10px;">
+    <div class="row">
+        <div class="col-sm-3">
+            <form class="form-inline">
+                <div class="form-group">
+                    <div id="multiple-datasets">
+                        <input ng-model="shoppingList" app-goods-search class="typeahead" type="text" placeholder="Введите название товара">
+                    </div>
+                </div>
+                <div app-add-new-product-button style="display:inline-block;"></div>
+            </form>
         </div>
-        <div class="col-sm-1" style="padding-left: 0;">
-            <div app-add-new-product-button></div>
-        </div>
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <div id="grid"></div>
         </div>
     </div>
