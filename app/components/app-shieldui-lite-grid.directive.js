@@ -9,22 +9,24 @@
     return {
       restrict: 'A',
       controller: [
-        '$watchCollection',
+        '$scope',
         'ShoppingModel',
         '$element',
-        function($watchCollection, ShoppingModel, $element) {
-          this.shopping = ShoppingModel;
+        function($scope, ShoppingModel, $element) {
+          let vm = this;
 
-          this.initShielduiLiteGrid = function() {
-            let originalShoppingListLength = 0;
+          vm.shopping = ShoppingModel;
 
-            let unbindCollectionWatcher = this.$watchCollection(
-              this.shopping.model.shoppingList,
-              function(newshoppingList, oldshoppingList) {
-                if (newshoppingList.length == originalShoppingListLength) {
+          vm.initShielduiLiteGrid = function() {
+            let unbindCollectionWatcher = $scope.$watchCollection(
+              function() {
+                return vm.shopping.model.shoppingList;
+              },
+              function(newShoppingList, oldShoppingList) {
+                if (newShoppingList.length > oldShoppingList.length) {
                   $($element).shieldGrid({
                     dataSource: {
-                      data: this.shopping.model.shoppingList,
+                      data: vm.shopping.model.shoppingList,
                       schema: {
                         fields: {
                           product: { type: 'string' }
@@ -34,7 +36,7 @@
                     columns: [
                       {
                         field: 'product',
-                        title: 'Producr Name',
+                        title: 'Товар',
                         width: '170px'
                       }
                     ]
