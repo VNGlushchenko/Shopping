@@ -19,8 +19,8 @@
 
           vm.menu = {
             apply: apply,
-            initShielduiLiteGrid: initShielduiLiteGrid /* ,
-            refreshShielduiLiteGrid: refreshShielduiLiteGrid */
+            initShielduiLiteGrid: initShielduiLiteGrid,
+            refreshShielduiLiteGrid: refreshShielduiLiteGrid
           };
 
           function apply() {
@@ -49,14 +49,39 @@
                         title: 'Товар',
                         width: '170px'
                       }
-                    ]
+                    ],
+                    events: {
+                      dataBound: function(e) {
+                        console.log(e);
+                        $scope.$watchCollection(
+                          function() {
+                            return vm.shopping.model.shoppingList;
+                          },
+                          function(newShoppingList, oldShoppingList) {
+                            if (
+                              newShoppingList.length > oldShoppingList.length
+                            ) {
+                              vm.menu.refreshShielduiLiteGrid(e.target);
+                            }
+                          }
+                        );
+                      }
+                    }
                   });
-
+                  /*                   let grid = $($element).swidget();
+                  console.log(grid); */
                   unbindCollectionWatcher();
-                  vm.menu.apply();
+                  //vm.menu.apply();
                 }
               }
             );
+          }
+
+          function refreshShielduiLiteGrid(elem) {
+            let options = elem.initialOptions;
+            options.dataSource.data = vm.shopping.model.shoppingList;
+            console.log(options);
+            elem.refresh(options);
           }
         }
       ],
