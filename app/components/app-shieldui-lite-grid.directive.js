@@ -17,7 +17,17 @@
 
           vm.shopping = ShoppingModel;
 
-          vm.initShielduiLiteGrid = function() {
+          vm.menu = {
+            apply: apply,
+            initShielduiLiteGrid: initShielduiLiteGrid /* ,
+            refreshShielduiLiteGrid: refreshShielduiLiteGrid */
+          };
+
+          function apply() {
+            return $scope.$apply();
+          }
+
+          function initShielduiLiteGrid() {
             let unbindCollectionWatcher = $scope.$watchCollection(
               function() {
                 return vm.shopping.model.shoppingList;
@@ -43,14 +53,15 @@
                   });
 
                   unbindCollectionWatcher();
+                  vm.menu.apply();
                 }
               }
             );
-          };
+          }
         }
       ],
       link: function(scope, elem, attrs, ctrl) {
-        ctrl.initShielduiLiteGrid();
+        ctrl.menu.initShielduiLiteGrid();
       }
     };
   }

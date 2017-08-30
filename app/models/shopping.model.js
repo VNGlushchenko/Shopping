@@ -24,7 +24,7 @@
     return vm.shopping;
 
     function getAllGoods() {
-      return $http.get(`${apiUrl}/getGoodsCatalog.php`);
+      return $http.get(`${apiUrl}/goodsCatalog.json`); //$http.get(`${apiUrl}/getGoodsCatalog.php`);
     }
 
     function createNewCategory(data) {
