@@ -42,17 +42,41 @@
                       data: vm.shopping.model.shoppingList,
                       schema: {
                         fields: {
-                          product: {
-                            type: 'string'
+                          categoryId: { path: 'categoryId', type: Number },
+                          categoryName: { path: 'categoryName', type: String },
+                          productId: { path: 'productId', type: Number },
+                          productName: { path: 'productName', type: String },
+                          productPrice: { path: 'productPrice', type: Number },
+                          purchaseDate: {
+                            function() {
+                              return new Date().toJSON();
+                            },
+                            type: Date
                           }
                         }
                       }
                     },
                     columns: [
                       {
-                        field: 'product',
+                        field: 'categoryName',
+                        title: 'Категория товара',
+                        width: '150px'
+                      },
+                      {
+                        field: 'productName',
                         title: 'Товар',
-                        width: '170px'
+                        width: '150px'
+                      },
+                      {
+                        field: 'productPrice',
+                        title: 'Цена, грн',
+                        width: '150px'
+                      },
+                      {
+                        field: 'purchaseDate',
+                        title: 'Дата покупки',
+                        width: '150px',
+                        format: '{0:MM/dd/yyyy}'
                       }
                     ],
                     events: {
@@ -67,6 +91,20 @@
                           vm.menu.destroyPreviousShoppingListWatcher = createNewShoppingListWatcher(
                             e.target
                           );
+                        }
+                      }
+                    },
+                    editing: {
+                      enabled: true,
+                      event: 'click',
+                      type: 'cell',
+                      batch: true,
+                      confirmation: {
+                        delete: {
+                          enabled: true,
+                          template: function(item) {
+                            return 'Delete row with ID = ' + item.ID;
+                          }
                         }
                       }
                     }

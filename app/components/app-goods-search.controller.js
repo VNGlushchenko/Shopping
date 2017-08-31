@@ -18,12 +18,9 @@
 
     vm.menu = {
       createTypeaheadOptions: createTypeaheadOptions,
-      initTypeahead: initTypeahead
+      initTypeahead: initTypeahead,
+      createNewShoppingListItem: createNewShoppingListItem
     };
-
-    function initTypeahead(params) {
-      $($element).typeahead(...params);
-    }
 
     function createTypeaheadOptions() {
       let typeaheadOptions = [];
@@ -54,6 +51,33 @@
       }
 
       vm.model.typeaheadOptions = typeaheadOptions;
+    }
+
+    function initTypeahead(params) {
+      $($element).typeahead(...params);
+    }
+
+    function createNewShoppingListItem(productName) {
+      let productNameIndex = null;
+      let categoryIndex;
+      let goodsCatalog = vm.shopping.model.goodsCatalog;
+
+      while (productNameIndex === null) {
+        for (let i = 0; i < goodsCatalog.length; i++) {
+          if (goodsCatalog[i].products[1].indexOf(productName) != -1) {
+            productNameIndex = goodsCatalog[i].products[1].indexOf(productName);
+            categoryIndex = i;
+          }
+        }
+      }
+
+      vm.shopping.model.shoppingList.push({
+        categoryId: goodsCatalog[categoryIndex].category_id,
+        categoryName: goodsCatalog[categoryIndex].category_name,
+        productId: goodsCatalog[categoryIndex].products[0][productNameIndex],
+        productName: productName,
+        productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex]
+      });
     }
   }
 })();

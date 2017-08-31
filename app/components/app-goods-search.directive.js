@@ -15,7 +15,7 @@
 
         elem.bind('typeahead:select', function(event, suggestion) {
           scope.$apply(function() {
-            ctrl.shopping.model.shoppingList.push({ product: suggestion });
+            ctrl.menu.createNewShoppingListItem(suggestion);
           });
         });
       }

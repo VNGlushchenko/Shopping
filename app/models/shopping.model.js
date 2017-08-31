@@ -39,6 +39,7 @@
           let categoryName = receivedData[1];
           let productId = receivedData[2];
           let productName = receivedData[3];
+          let lastPrice = receivedData[4];
 
           // distinct categoryIds elicitation
           let elemForCheck = categoryId[0];
@@ -58,7 +59,7 @@
             goodsCatalog[i] = {};
             goodsCatalog[i].category_id = categoryId[posUniqueElemsArr[i]];
             goodsCatalog[i].category_name = categoryName[posUniqueElemsArr[i]];
-            goodsCatalog[i].products = [[], []];
+            goodsCatalog[i].products = [[], [], []];
             // categoriesList filling
             vm.shopping.model.categoriesList[i] = {};
             vm.shopping.model.categoriesList[i].category_id =
@@ -76,6 +77,7 @@
               ) {
                 goodsCatalog[i].products[0].push(productId[j]);
                 goodsCatalog[i].products[1].push(productName[j]);
+                goodsCatalog[i].products[2].push(lastPrice[j]);
               }
             }
           }
