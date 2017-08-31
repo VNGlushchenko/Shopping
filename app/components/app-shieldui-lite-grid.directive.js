@@ -22,7 +22,7 @@
             asyncInitShielduiLiteGrid: asyncInitShielduiLiteGrid,
             initShielduiLiteGrid: initShielduiLiteGrid,
             refreshShielduiLiteGrid: refreshShielduiLiteGrid,
-            destroyPreviousShoppingListnWatcher: null,
+            destroyPreviousShoppingListWatcher: null,
             createNewShoppingListWatcher: createNewShoppingListWatcher
           };
 
@@ -57,14 +57,14 @@
                     ],
                     events: {
                       dataBound: function(e) {
-                        if (vm.menu.destroyPreviousCollectionWatcher) {
-                          vm.menu.destroyPreviousCollectionWatcher();
-                          vm.menu.destroyPreviousCollectionWatcher = null;
-                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListWatcher(
+                        if (vm.menu.destroyPreviousShoppingListWatcher) {
+                          vm.menu.destroyPreviousShoppingListWatcher();
+                          vm.menu.destroyPreviousShoppingListWatcher = null;
+                          vm.menu.destroyPreviousShoppingListWatcher = createNewShoppingListWatcher(
                             e.target
                           );
                         } else {
-                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListWatcher(
+                          vm.menu.destroyPreviousShoppingListWatcher = createNewShoppingListWatcher(
                             e.target
                           );
                         }
