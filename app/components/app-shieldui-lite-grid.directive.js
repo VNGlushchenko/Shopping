@@ -23,7 +23,7 @@
             initShielduiLiteGrid: initShielduiLiteGrid,
             refreshShielduiLiteGrid: refreshShielduiLiteGrid,
             destroyPreviousShoppingListnWatcher: null,
-            createNewShoppingListnWatcher: createNewShoppingListnWatcher
+            createNewShoppingListWatcher: createNewShoppingListWatcher
           };
 
           function asyncInitShielduiLiteGrid() {
@@ -60,11 +60,11 @@
                         if (vm.menu.destroyPreviousCollectionWatcher) {
                           vm.menu.destroyPreviousCollectionWatcher();
                           vm.menu.destroyPreviousCollectionWatcher = null;
-                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListnWatcher(
+                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListWatcher(
                             e.target
                           );
                         } else {
-                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListnWatcher(
+                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListWatcher(
                             e.target
                           );
                         }
@@ -78,7 +78,7 @@
             );
           }
 
-          function createNewShoppingListnWatcher(gridElem) {
+          function createNewShoppingListWatcher(gridElem) {
             return $scope.$watchCollection(
               function() {
                 return vm.shopping.model.shoppingList;
@@ -97,7 +97,7 @@
             gridElem.refresh(options);
             vm.refreshCounter++;
             console.log('refresh #' + vm.refreshCounter);
-            console.log(options);
+            console.log(JSON.stringify(options));
           }
         }
       ],
