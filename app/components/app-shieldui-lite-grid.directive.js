@@ -12,19 +12,22 @@
         '$scope',
         'ShoppingModel',
         '$element',
-        function($scope, ShoppingModel, $element) {
+        '$timeout',
+        function($scope, ShoppingModel, $element, $timeout) {
           let vm = this;
-
+          vm.refreshCounter = 0;
           vm.shopping = ShoppingModel;
 
           vm.menu = {
-            apply: apply,
+            asyncInitShielduiLiteGrid: asyncInitShielduiLiteGrid,
             initShielduiLiteGrid: initShielduiLiteGrid,
-            refreshShielduiLiteGrid: refreshShielduiLiteGrid
+            refreshShielduiLiteGrid: refreshShielduiLiteGrid,
+            destroyPreviousShoppingListnWatcher: null,
+            createNewShoppingListnWatcher: createNewShoppingListnWatcher
           };
 
-          function apply() {
-            return $scope.$apply();
+          function asyncInitShielduiLiteGrid() {
+            $timeout(initShielduiLiteGrid, 0);
           }
 
           function initShielduiLiteGrid() {
@@ -39,7 +42,9 @@
                       data: vm.shopping.model.shoppingList,
                       schema: {
                         fields: {
-                          product: { type: 'string' }
+                          product: {
+                            type: 'string'
+                          }
                         }
                       }
                     },
@@ -52,41 +57,52 @@
                     ],
                     events: {
                       dataBound: function(e) {
-                        console.log(e);
-                        $scope.$watchCollection(
-                          function() {
-                            return vm.shopping.model.shoppingList;
-                          },
-                          function(newShoppingList, oldShoppingList) {
-                            if (
-                              newShoppingList.length > oldShoppingList.length
-                            ) {
-                              vm.menu.refreshShielduiLiteGrid(e.target);
-                            }
-                          }
-                        );
+                        if (vm.menu.destroyPreviousCollectionWatcher) {
+                          vm.menu.destroyPreviousCollectionWatcher();
+                          vm.menu.destroyPreviousCollectionWatcher = null;
+                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListnWatcher(
+                            e.target
+                          );
+                        } else {
+                          vm.menu.destroyPreviousCollectionWatcher = createNewShoppingListnWatcher(
+                            e.target
+                          );
+                        }
                       }
                     }
                   });
-                  /*                   let grid = $($element).swidget();
-                  console.log(grid); */
+
                   unbindCollectionWatcher();
-                  //vm.menu.apply();
                 }
               }
             );
           }
 
-          function refreshShielduiLiteGrid(elem) {
-            let options = elem.initialOptions;
+          function createNewShoppingListnWatcher(gridElem) {
+            return $scope.$watchCollection(
+              function() {
+                return vm.shopping.model.shoppingList;
+              },
+              function(newShoppingList, oldShoppingList) {
+                if (newShoppingList.length > oldShoppingList.length) {
+                  vm.menu.refreshShielduiLiteGrid(gridElem);
+                }
+              }
+            );
+          }
+
+          function refreshShielduiLiteGrid(gridElem) {
+            let options = gridElem.initialOptions;
             options.dataSource.data = vm.shopping.model.shoppingList;
+            gridElem.refresh(options);
+            vm.refreshCounter++;
+            console.log('refresh #' + vm.refreshCounter);
             console.log(options);
-            elem.refresh(options);
           }
         }
       ],
       link: function(scope, elem, attrs, ctrl) {
-        ctrl.menu.initShielduiLiteGrid();
+        ctrl.menu.asyncInitShielduiLiteGrid();
       }
     };
   }
