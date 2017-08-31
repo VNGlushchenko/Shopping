@@ -42,15 +42,28 @@
                       data: vm.shopping.model.shoppingList,
                       schema: {
                         fields: {
-                          categoryId: { path: 'categoryId', type: Number },
-                          categoryName: { path: 'categoryName', type: String },
-                          productId: { path: 'productId', type: Number },
-                          productName: { path: 'productName', type: String },
-                          productPrice: { path: 'productPrice', type: Number },
+                          categoryId: {
+                            path: 'categoryId',
+                            type: Number
+                          },
+                          categoryName: {
+                            path: 'categoryName',
+                            type: String
+                          },
+                          productId: {
+                            path: 'productId',
+                            type: Number
+                          },
+                          productName: {
+                            path: 'productName',
+                            type: String
+                          },
+                          productPrice: {
+                            path: 'productPrice',
+                            type: Number
+                          },
                           purchaseDate: {
-                            function() {
-                              return new Date().toJSON();
-                            },
+                            path: 'purchaseDate',
                             type: Date
                           }
                         }

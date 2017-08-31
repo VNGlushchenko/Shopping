@@ -76,7 +76,8 @@
         categoryName: goodsCatalog[categoryIndex].category_name,
         productId: goodsCatalog[categoryIndex].products[0][productNameIndex],
         productName: productName,
-        productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex]
+        productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex],
+        purchaseDate: '2010/04/12'
       });
     }
   }
