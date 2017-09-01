@@ -58,8 +58,23 @@
                             path: 'productName',
                             type: String
                           },
+                          productUnit: {
+                            path: 'productUnit',
+                            type: Number
+                          },
                           productPrice: {
                             path: 'productPrice',
+                            type: Number
+                          },
+                          productCost: {
+                            function() {
+                              return (
+                                $($element).swidget().dataSource.view[0]
+                                  .productPrice *
+                                $($element).swidget().dataSource.view[0]
+                                  .productUnit
+                              );
+                            },
                             type: Number
                           },
                           purchaseDate: {
@@ -73,12 +88,20 @@
                       {
                         field: 'categoryName',
                         title: 'Категория товара',
-                        width: '150px'
+                        width: '150px',
+                        editable: false
                       },
                       {
                         field: 'productName',
                         title: 'Товар',
-                        width: '150px'
+                        width: '150px',
+                        editable: false
+                      },
+                      {
+                        field: 'productUnit',
+                        title: 'Кол-во товара, шт/кг',
+                        width: '150px',
+                        format: '{0:n}'
                       },
                       {
                         field: 'productPrice',
@@ -86,10 +109,16 @@
                         width: '150px'
                       },
                       {
+                        field: 'productCost',
+                        title: 'Стоимость, грн',
+                        width: '150px',
+                        editable: false
+                      },
+                      {
                         field: 'purchaseDate',
                         title: 'Дата покупки',
                         width: '150px',
-                        format: '{0:MM/dd/yyyy}'
+                        format: '{0:dd.MM.yyyy}'
                       }
                     ],
                     events: {
@@ -111,7 +140,6 @@
                       enabled: true,
                       event: 'click',
                       type: 'cell',
-                      batch: true,
                       confirmation: {
                         delete: {
                           enabled: true,
@@ -122,6 +150,11 @@
                       }
                     }
                   });
+
+                  $($element)[0].nextSibling.nodeValue = '';
+                  $($element)
+                    .next()
+                    .remove();
 
                   unbindCollectionWatcher();
                 }

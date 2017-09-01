@@ -26,7 +26,7 @@ header div.col-sm-6 {
 
 .typeahead,
 .tt-hint {
-  width: 250px;
+  width: 263px;
   height: 34px;
   padding: 8px 12px;
   font-size: 18px;
@@ -48,7 +48,7 @@ header div.col-sm-6 {
 }
 
 .tt-menu {
-  width: 250px;
+  width: 263px;
   margin: 12px 0;
   padding: 8px 0;
   background-color: #fff;
