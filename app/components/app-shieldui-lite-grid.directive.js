@@ -73,6 +73,12 @@
               },
               columns: [
                 {
+                  field: 'purchaseDate',
+                  title: 'Дата покупки',
+                  width: '150px',
+                  format: '{0:dd.MM.yyyy}'
+                },
+                {
                   field: 'categoryName',
                   title: 'Категория товара',
                   width: '150px',
@@ -99,12 +105,6 @@
                   title: 'Стоимость, грн',
                   width: '150px',
                   editable: false
-                },
-                {
-                  field: 'purchaseDate',
-                  title: 'Дата покупки',
-                  width: '150px',
-                  format: '{0:dd.MM.yyyy}'
                 }
               ],
               events: {

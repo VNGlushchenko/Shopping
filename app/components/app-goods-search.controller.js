@@ -79,7 +79,7 @@
         productUnit: 1,
         productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex],
         productCost: goodsCatalog[categoryIndex].products[2][productNameIndex],
-        purchaseDate: new Date().toJSON()
+        purchaseDate: new Date()
       };
     }
   }
