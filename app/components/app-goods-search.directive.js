@@ -15,7 +15,13 @@
 
         elem.bind('typeahead:select', function(event, suggestion) {
           scope.$apply(function() {
-            ctrl.menu.createNewShoppingListItem(suggestion);
+            $('#grid')
+              .swidget()
+              .addRow(ctrl.menu.createNewShoppingListItem(suggestion));
+
+            $('#grid')
+              .swidget()
+              .saveChanges();
           });
         });
       }

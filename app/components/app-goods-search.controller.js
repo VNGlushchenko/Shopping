@@ -71,7 +71,7 @@
         }
       }
 
-      vm.shopping.model.shoppingList.push({
+      return {
         categoryId: goodsCatalog[categoryIndex].category_id,
         categoryName: goodsCatalog[categoryIndex].category_name,
         productId: goodsCatalog[categoryIndex].products[0][productNameIndex],
@@ -80,7 +80,7 @@
         productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex],
         productCost: goodsCatalog[categoryIndex].products[2][productNameIndex],
         purchaseDate: new Date().toJSON()
-      });
+      };
     }
   }
 })();
