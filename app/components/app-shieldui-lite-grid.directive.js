@@ -67,7 +67,7 @@
                           },
                           productPrice: {
                             path: 'productPrice',
-                            type: Number
+                            type: String
                           },
                           productCost: {
                             path: 'productCost',
@@ -131,27 +131,42 @@
                         }
                       },
                       edit: function(e) {
-                        vm.model.indexLastEditedRow = e.row[0].rowIndex; //e.index результат такой же дает
-                        vm.model.indexLastEditedCell = e.cell.cellIndex;
-                        console.log('from event edit');
-                        console.log(
-                          'indexLastEditedRow = ' +
-                            vm.model.indexLastEditedRow +
-                            ', indexLastEditedCell = ' +
-                            vm.model.indexLastEditedCell
-                        );
-                        console.log(e);
-                        console.log(
-                          JSON.stringify(
-                            $($element)
-                              .swidget()
-                              .dataItem(e.index)
-                          )
-                        );
+                        if (
+                          $(e.cell.localName).parents('div.sui-gridcontent')
+                            .length > 0
+                        ) {
+                          vm.model.indexLastEditedRow =
+                            e.cell.parentElement.rowIndex;
+                          vm.model.indexLastEditedCell = e.cell.cellIndex;
+                        }
                       },
                       save: function(e) {
-                        console.log('from event save');
-                        console.log(e);
+                        if (
+                          vm.model.indexLastEditedCell == 2 ||
+                          vm.model.indexLastEditedCell == 3
+                        ) {
+                          e.target.dataSource.data[
+                            vm.model.indexLastEditedRow
+                          ].productCost = +(+e.target.dataSource.data[
+                            vm.model.indexLastEditedRow
+                          ].productUnit *
+                            +e.target.dataSource.data[
+                              vm.model.indexLastEditedRow
+                            ].productPrice).toFixed(2);
+                          $($element)
+                            .swidget()
+                            .saveChanges();
+                          console.log('from e.target.dataSource.data');
+                          console.log(JSON.stringify(e.target.dataSource.data));
+                          console.log(
+                            'from $($element).swidget().dataSource.data'
+                          );
+                          console.log(
+                            JSON.stringify(
+                              $($element).swidget().dataSource.data
+                            )
+                          );
+                        }
                       }
                     },
                     editing: {
@@ -202,17 +217,6 @@
       ],
       link: function(scope, elem, attrs, ctrl) {
         ctrl.menu.asyncInitShielduiLiteGrid();
-
-        elem.bind('click', function(e) {
-          console.log('from click rowIndex');
-          console.log(
-            $(e.target)
-              .parent('tr')
-              .index()
-          );
-          console.log('from click cellIndex');
-          console.log($(e.target).index());
-        });
       }
     };
   }

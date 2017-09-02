@@ -76,7 +76,7 @@
         categoryName: goodsCatalog[categoryIndex].category_name,
         productId: goodsCatalog[categoryIndex].products[0][productNameIndex],
         productName: productName,
-        productUnit: '1.000',
+        productUnit: 1,
         productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex],
         productCost: goodsCatalog[categoryIndex].products[2][productNameIndex],
         purchaseDate: new Date().toJSON()
