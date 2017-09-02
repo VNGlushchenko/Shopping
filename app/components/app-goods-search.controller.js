@@ -76,8 +76,9 @@
         categoryName: goodsCatalog[categoryIndex].category_name,
         productId: goodsCatalog[categoryIndex].products[0][productNameIndex],
         productName: productName,
-        productUnit: 0.999,
+        productUnit: '1.000',
         productPrice: goodsCatalog[categoryIndex].products[2][productNameIndex],
+        productCost: goodsCatalog[categoryIndex].products[2][productNameIndex],
         purchaseDate: new Date().toJSON()
       });
     }
