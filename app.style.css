@@ -17,6 +17,10 @@ header div.col-sm-6 {
     margin-top: 10px;
 }
 
+.sui-footer-cell {
+    background-color: #b4d9e3;
+}
+
 #multiple-datasets .category-name {
     margin: 0 20px 5px 20px;
     padding: 3px 0;
