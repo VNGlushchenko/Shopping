@@ -15,19 +15,17 @@
 
         elem.bind('typeahead:select', function(event, suggestion) {
           scope.$apply(function() {
-            if (ctrl.shopping.model.shoppingList.length == 0) {
-              ctrl.shopping.model.shoppingList.push(
-                ctrl.menu.createNewShoppingListItem(suggestion)
-              );
-            } else {
-              $('#grid')
-                .swidget()
-                .addRow(ctrl.menu.createNewShoppingListItem(suggestion));
+            $('#grid')
+              .swidget()
+              .addRow(ctrl.menu.createNewShoppingListItem(suggestion));
 
-              $('#grid')
-                .swidget()
-                .saveChanges();
-            }
+            $('#grid')
+              .swidget()
+              .saveChanges();
+
+            ctrl.shopping.model.shoppingListLength = $(
+              '#grid'
+            ).swidget().dataSource.data.length;
           });
         });
       }

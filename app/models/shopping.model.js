@@ -12,7 +12,8 @@
       model: {
         goodsCatalog: [],
         shoppingList: [],
-        categoriesList: []
+        categoriesList: [],
+        shoppingListLength: 0
       },
       menu: {
         getAllGoods: getAllGoods,
