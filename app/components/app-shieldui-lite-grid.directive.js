@@ -1,235 +1,258 @@
-(function() {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('shopping')
-    .directive('appShielduiLiteGrid', appShielduiLiteGrid);
+    angular
+        .module('shopping')
+        .directive('appShielduiLiteGrid', appShielduiLiteGrid);
 
-  function appShielduiLiteGrid() {
-    return {
-      restrict: 'A',
-      controller: [
-        'ShoppingModel',
-        '$element',
-        '$timeout',
-        function(ShoppingModel, $element, $timeout) {
-          let vm = this;
-          vm.shopping = ShoppingModel;
+    function appShielduiLiteGrid() {
+        return {
+            restrict: 'A',
+            controller: [
+                'ShoppingModel',
+                '$element',
+                '$timeout',
+                function (ShoppingModel, $element, $timeout) {
+                    let vm = this;
+                    vm.shopping = ShoppingModel;
 
-          vm.model = {
-            indexLastEditedRow: null,
-            indexLastEditedCell: null
-          };
-          vm.menu = {
-            asyncInitShielduiLiteGrid: asyncInitShielduiLiteGrid,
-            initShielduiLiteGrid: initShielduiLiteGrid
-          };
+                    vm.model = {
+                        indexLastEditedRow: null,
+                        indexLastEditedCell: null
+                    };
+                    vm.menu = {
+                        asyncInitShielduiLiteGrid: asyncInitShielduiLiteGrid,
+                        initShielduiLiteGrid: initShielduiLiteGrid
+                    };
 
-          function asyncInitShielduiLiteGrid() {
-            $timeout(initShielduiLiteGrid, 0);
-          }
-
-          function initShielduiLiteGrid() {
-            $($element).shieldGrid({
-              dataSource: {
-                data: vm.shopping.model.shoppingList,
-                schema: {
-                  fields: {
-                    categoryId: {
-                      path: 'categoryId',
-                      type: Number
-                    },
-                    categoryName: {
-                      path: 'categoryName',
-                      type: String
-                    },
-                    productId: {
-                      path: 'productId',
-                      type: Number
-                    },
-                    productName: {
-                      path: 'productName',
-                      type: String
-                    },
-                    productUnit: {
-                      path: 'productUnit',
-                      type: String
-                    },
-                    productPrice: {
-                      path: 'productPrice',
-                      type: String
-                    },
-                    productCost: {
-                      path: 'productCost',
-                      type: Number
-                    },
-                    purchaseDate: {
-                      path: 'purchaseDate',
-                      type: Date
+                    function asyncInitShielduiLiteGrid() {
+                        $timeout(initShielduiLiteGrid, 0);
                     }
-                  }
-                },
-                aggregate: [
-                  {
-                    field: 'productCost',
-                    aggregate: function(data, aggregate) {
-                      let sum = 0;
 
-                      for (let x in data) {
-                        sum += data[x].productCost;
-                      }
+                    function initShielduiLiteGrid() {
+                        $($element).shieldGrid({
+                            dataSource: {
+                                data: [] /* vm.shopping.model.shoppingList */ ,
+                                schema: {
+                                    fields: {
+                                        categoryId: {
+                                            path: 'categoryId',
+                                            type: Number
+                                        },
+                                        categoryName: {
+                                            path: 'categoryName',
+                                            type: String
+                                        },
+                                        productId: {
+                                            path: 'productId',
+                                            type: Number
+                                        },
+                                        productName: {
+                                            path: 'productName',
+                                            type: String
+                                        },
+                                        productUnit: {
+                                            path: 'productUnit',
+                                            type: String
+                                        },
+                                        productPrice: {
+                                            path: 'productPrice',
+                                            type: String
+                                        },
+                                        productCost: {
+                                            path: 'productCost',
+                                            type: Number
+                                        },
+                                        purchaseDate: {
+                                            path: 'purchaseDate',
+                                            type: Date
+                                        }
+                                    }
+                                },
+                                aggregate: [{
+                                    field: 'productCost',
+                                    aggregate: function (data, aggregate) {
+                                        let sum = 0;
 
-                      return +sum.toFixed(2);
+                                        for (let x in data) {
+                                            sum += data[x].productCost;
+                                        }
+
+                                        return +sum.toFixed(2);
+                                    }
+                                }]
+                            },
+                            sorting: {
+                                multiple: true
+                            },
+                            paging: false,
+                            scrolling: true,
+                            height: 528,
+                            toolbar: [{
+                                buttons: [{
+                                    cls: 'save',
+                                    commandName: "details",
+                                    caption: "Сохранить покупки в архив",
+                                    click: function (e) {
+                                        //e.preventDefault;
+                                        console.log(JSON.stringify($($element).swidget().dataSource.data));
+
+                                    }
+                                }]
+                            }],
+                            columns: [{
+                                    field: 'purchaseDate',
+                                    title: 'Дата покупки',
+                                    width: '120px',
+                                    format: '{0:dd.MM.yyyy}',
+                                    attributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    },
+                                    headerAttributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    }
+                                },
+                                {
+                                    field: 'categoryName',
+                                    title: 'Категория товара',
+                                    width: '150px',
+                                    editable: false,
+                                    headerAttributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    }
+                                },
+                                {
+                                    field: 'productName',
+                                    title: 'Товар',
+                                    width: '140px',
+                                    editable: false,
+                                    headerAttributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    }
+                                },
+                                {
+                                    field: 'productUnit',
+                                    title: 'Кол-во, шт/кг',
+                                    width: '120px',
+                                    attributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    },
+                                    headerAttributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    },
+                                    validator: function (value) {
+                                        return value == 0 ? undefined : value;
+                                    }
+                                },
+                                {
+                                    field: 'productPrice',
+                                    title: 'Цена, грн',
+                                    width: '80px',
+                                    attributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    },
+                                    headerAttributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    },
+                                    validator: function (value) {
+                                        return value == 0 ? undefined : value;
+                                    }
+                                },
+                                {
+                                    field: 'productCost',
+                                    title: 'Стоимость, грн',
+                                    width: '100px',
+                                    editable: false,
+                                    footerTemplate: 'Итого: {custom}',
+                                    attributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    },
+                                    headerAttributes: {
+                                        class: 'table-cell',
+                                        style: 'text-align: center;'
+                                    }
+                                },
+                                {
+                                    title: " ",
+                                    buttons: [{
+                                        cls: "deleteButton",
+                                        commandName: "delete",
+                                        caption: '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red; border-color: red;"></span>'
+                                    }],
+                                    width: '50px'
+                                }
+                            ],
+                            events: {
+                                error: function (e) {
+                                    /* var path = e.path;
+                                    var value = e.value;
+                                    var editor = editor; */
+                                    console.log(e.path);
+                                    // handle the error ...
+                                },
+                                edit: function (e) {
+                                    if (
+                                        $(e.cell.localName).parents('div.sui-gridcontent').length >
+                                        0
+                                    ) {
+                                        vm.model.indexLastEditedRow = e.cell.parentElement.rowIndex;
+                                        vm.model.indexLastEditedCell = e.cell.cellIndex;
+                                    }
+                                },
+                                save: function (e) {
+                                    if (
+                                        vm.model.indexLastEditedCell == 3 ||
+                                        vm.model.indexLastEditedCell == 4
+                                    ) {
+                                        e.target.dataSource.data[
+                                            vm.model.indexLastEditedRow
+                                        ].productCost = +(+e.target.dataSource.data[
+                                                vm.model.indexLastEditedRow
+                                            ].productUnit *
+                                            +e.target.dataSource.data[vm.model.indexLastEditedRow]
+                                            .productPrice).toFixed(2);
+                                        $($element)
+                                            .swidget()
+                                            .saveChanges();
+                                    }
+                                }
+                            },
+                            editing: {
+                                enabled: true,
+                                event: 'click',
+                                type: 'cell',
+                                confirmation: {
+                                    delete: {
+                                        enabled: true,
+                                        template: function (item) {
+                                            return 'Вы действительно хотите удалить товар?';
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        $($element)[0].nextSibling.nodeValue = '';
+
+                        $($element)
+                            .next()
+                            .remove();
                     }
-                  }
-                ]
-              },
-              sorting: {
-                multiple: true
-              },
-              paging: {
-                pageSize: 10,
-                pageLinksCount: 3,
-                messages: {
-                  infoBarTemplate: '{3} страница из {4}',
-                  firstTooltip: 'Первая страница',
-                  previousTooltip: 'Предыдущая страница',
-                  nextTooltip: 'Следующая страница',
-                  lastTooltip: 'Последняя страница'
                 }
-              },
-              columns: [
-                {
-                  field: 'purchaseDate',
-                  title: 'Дата покупки',
-                  width: '170px',
-                  format: '{0:dd.MM.yyyy}',
-                  attributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  },
-                  headerAttributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  }
-                },
-                {
-                  field: 'categoryName',
-                  title: 'Категория товара',
-                  width: '170px',
-                  editable: false,
-                  headerAttributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  }
-                },
-                {
-                  field: 'productName',
-                  title: 'Товар',
-                  width: '170px',
-                  editable: false,
-                  headerAttributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  }
-                },
-                {
-                  field: 'productUnit',
-                  title: 'Кол-во, шт/кг',
-                  width: '130px',
-                  attributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  },
-                  headerAttributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  }
-                },
-                {
-                  field: 'productPrice',
-                  title: 'Цена, грн',
-                  width: '170px',
-                  attributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  },
-                  headerAttributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  }
-                },
-                {
-                  field: 'productCost',
-                  title: 'Стоимость, грн',
-                  width: '170px',
-                  editable: false,
-                  footerTemplate: 'Итого: {custom}',
-                  attributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  },
-                  headerAttributes: {
-                    class: 'table-cell',
-                    style: 'text-align: center;'
-                  }
-                }
-              ],
-              events: {
-                edit: function(e) {
-                  if (
-                    $(e.cell.localName).parents('div.sui-gridcontent').length >
-                    0
-                  ) {
-                    vm.model.indexLastEditedRow = e.cell.parentElement.rowIndex;
-                    vm.model.indexLastEditedCell = e.cell.cellIndex;
-                  }
-                },
-                save: function(e) {
-                  if (
-                    vm.model.indexLastEditedCell == 3 ||
-                    vm.model.indexLastEditedCell == 4
-                  ) {
-                    e.target.dataSource.data[
-                      vm.model.indexLastEditedRow
-                    ].productCost = +(+e.target.dataSource.data[
-                      vm.model.indexLastEditedRow
-                    ].productUnit *
-                      +e.target.dataSource.data[vm.model.indexLastEditedRow]
-                        .productPrice).toFixed(2);
-                    $($element)
-                      .swidget()
-                      .saveChanges();
-                  }
-                }
-              },
-              editing: {
-                enabled: true,
-                event: 'click',
-                type: 'cell',
-                confirmation: {
-                  delete: {
-                    enabled: true,
-                    template: function(item) {
-                      return 'Delete row with ID = ' + item.ID;
-                    }
-                  }
-                }
-              }
-            });
-
-            $($element)[0].nextSibling.nodeValue = '';
-
-            $($element)
-              .next()
-              .remove();
-          }
-        }
-      ],
-      controllerAs: 'shielduiGridCtrl',
-      link: function(scope, elem, attrs, ctrl) {
-        ctrl.menu.asyncInitShielduiLiteGrid();
-      }
-    };
-  }
+            ],
+            controllerAs: 'shielduiGridCtrl',
+            link: function (scope, elem, attrs, ctrl) {
+                ctrl.menu.asyncInitShielduiLiteGrid();
+            }
+        };
+    }
 })();
