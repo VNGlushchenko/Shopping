@@ -87,3 +87,11 @@ header div.col-sm-6 {
 .tooltip-inner {
     width: 165px;
 }
+
+div .sui-table td .invalid-back {
+    background-color: #ffe0e1;
+}
+
+.invalid-border {
+    border: 1px solid red;
+}

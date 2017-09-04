@@ -26,6 +26,12 @@
             ctrl.shopping.model.shoppingListLength = $(
               '#grid'
             ).swidget().dataSource.data.length;
+
+            ctrl.shopping.menu.calcCategoriesTotalCosts(
+              $('#grid').swidget().dataSource.data
+            );
+
+            ctrl.menu.emitShielduiGridInit();
           });
         });
       }

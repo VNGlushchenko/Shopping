@@ -11,14 +11,15 @@
     vm.shopping = {
       model: {
         goodsCatalog: [],
-        shoppingList: [],
+        categoriesTotalCosts: [],
         categoriesList: [],
         shoppingListLength: 0
       },
       menu: {
         getAllGoods: getAllGoods,
         createNewCategory: createNewCategory,
-        createGoodsCatalog: createGoodsCatalog
+        createGoodsCatalog: createGoodsCatalog,
+        calcCategoriesTotalCosts: calcCategoriesTotalCosts
       }
     };
 
@@ -91,6 +92,26 @@
         },
         error => console.log(error)
       );
+    }
+
+    function calcCategoriesTotalCosts(inputData) {
+      let categoriesList = vm.shopping.model.categoriesList;
+      let categoriesTotalCosts = [];
+
+      for (let i = 0; i < categoriesList.length; i++) {
+        categoriesTotalCosts.push({
+          name: categoriesList[i].category_name,
+          y: 0
+        });
+
+        for (let j = 0; j < inputData.length; j++) {
+          if (categoriesTotalCosts[i].name == inputData[j].categoryName) {
+            categoriesTotalCosts[i].y += inputData[j].productCost;
+          }
+        }
+      }
+
+      vm.shopping.model.categoriesTotalCosts = categoriesTotalCosts;
     }
   }
 })();
