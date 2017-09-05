@@ -31,7 +31,7 @@
               $('#grid').swidget().dataSource.data
             );
 
-            ctrl.menu.emitShielduiGridInit();
+            ctrl.shopping.menu.emitShielduiGridInit();
           });
         });
       }

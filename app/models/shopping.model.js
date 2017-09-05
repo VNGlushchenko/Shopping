@@ -3,9 +3,9 @@
 
   angular.module('shopping').factory('ShoppingModel', ShoppingModel);
 
-  ShoppingModel.$inject = ['$http', 'apiUrl', '$q'];
+  ShoppingModel.$inject = ['$http', 'apiUrl', '$q', '$rootScope'];
 
-  function ShoppingModel($http, apiUrl, $q) {
+  function ShoppingModel($http, apiUrl, $q, $rootScope) {
     let vm = this;
 
     vm.shopping = {
@@ -19,7 +19,8 @@
         getAllGoods: getAllGoods,
         createNewCategory: createNewCategory,
         createGoodsCatalog: createGoodsCatalog,
-        calcCategoriesTotalCosts: calcCategoriesTotalCosts
+        calcCategoriesTotalCosts: calcCategoriesTotalCosts,
+        emitShielduiGridInit: emitShielduiGridInit
       }
     };
 
@@ -95,9 +96,11 @@
     }
 
     function calcCategoriesTotalCosts(inputData) {
+      vm.shopping.model.categoriesTotalCosts.length = 0;
+
       let categoriesList = vm.shopping.model.categoriesList;
       let categoriesTotalCosts = [];
-
+      let categoriesTotalCostsWithoutZeroes = [];
       for (let i = 0; i < categoriesList.length; i++) {
         categoriesTotalCosts.push({
           name: categoriesList[i].category_name,
@@ -111,7 +114,21 @@
         }
       }
 
-      vm.shopping.model.categoriesTotalCosts = categoriesTotalCosts;
+      for (let i = 0; i < categoriesTotalCosts.length; i++) {
+        if (categoriesTotalCosts[i].y > 0) {
+          categoriesTotalCostsWithoutZeroes.push(categoriesTotalCosts[i]);
+        }
+      }
+
+      for (let i = 0; i < categoriesTotalCostsWithoutZeroes.length; i++) {
+        vm.shopping.model.categoriesTotalCosts.push(
+          categoriesTotalCostsWithoutZeroes[i]
+        );
+      }
+    }
+
+    function emitShielduiGridInit() {
+      $rootScope.$emit('shielduiGridInitialized');
     }
   }
 })();

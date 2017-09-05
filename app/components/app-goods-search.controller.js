@@ -5,13 +5,9 @@
     .module('shopping')
     .controller('appGoodsSearchController', appGoodsSearchController);
 
-  appGoodsSearchController.$inject = [
-    'ShoppingModel',
-    '$element',
-    '$rootScope'
-  ];
+  appGoodsSearchController.$inject = ['ShoppingModel', '$element'];
 
-  function appGoodsSearchController(ShoppingModel, $element, $rootScope) {
+  function appGoodsSearchController(ShoppingModel, $element) {
     let vm = this;
 
     vm.shopping = ShoppingModel;
@@ -23,8 +19,7 @@
     vm.menu = {
       createTypeaheadOptions: createTypeaheadOptions,
       initTypeahead: initTypeahead,
-      createNewShoppingListItem: createNewShoppingListItem,
-      emitShielduiGridInit: emitShielduiGridInit
+      createNewShoppingListItem: createNewShoppingListItem
     };
 
     function createTypeaheadOptions() {
@@ -86,10 +81,6 @@
         productCost: goodsCatalog[categoryIndex].products[2][productNameIndex],
         purchaseDate: new Date()
       };
-    }
-
-    function emitShielduiGridInit() {
-      $rootScope.$emit('shielduiGridInitialized');
     }
   }
 })();

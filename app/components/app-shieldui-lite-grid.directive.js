@@ -257,7 +257,14 @@
                     vm.shopping.menu.calcCategoriesTotalCosts(
                       $($element).swidget().dataSource.data
                     );
+                    vm.shopping.menu.emitShielduiGridInit();
                   }
+                },
+                delete: function(e) {
+                  vm.shopping.menu.calcCategoriesTotalCosts(
+                    $($element).swidget().dataSource.data
+                  );
+                  vm.shopping.menu.emitShielduiGridInit();
                 }
               },
               editing: {

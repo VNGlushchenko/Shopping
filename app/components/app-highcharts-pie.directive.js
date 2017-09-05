@@ -15,7 +15,7 @@
 
           vm.pieSeries = [
             {
-              name: 'Категория товаров',
+              name: 'Доля',
               colorByPoint: true,
               data: vm.shopping.model.categoriesTotalCosts
             }
