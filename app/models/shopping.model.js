@@ -11,16 +11,20 @@
     vm.shopping = {
       model: {
         goodsCatalog: [],
-        categoriesTotalCosts: [],
         categoriesList: [],
-        shoppingListLength: 0
+        previousShoppingList: [],
+        actualShoppingListLength: 0,
+        categoriesTotalCosts: [],
+        shielduiGridRepository: []
       },
       menu: {
         getAllGoods: getAllGoods,
         createNewCategory: createNewCategory,
         createGoodsCatalog: createGoodsCatalog,
         calcCategoriesTotalCosts: calcCategoriesTotalCosts,
-        emitShielduiGridInit: emitShielduiGridInit
+        emitShielduiGridInit: emitShielduiGridInit,
+        approveShoppingListPieAnimation: approveShoppingListPieAnimation,
+        createActualShoppingListBackup: createActualShoppingListBackup
       }
     };
 
@@ -88,7 +92,7 @@
           vm.shopping.model.goodsCatalog = goodsCatalog;
 
           return $q(function(resolve, reject) {
-            resolve('OK');
+            resolve('Success');
           });
         },
         error => console.log(error)
@@ -100,35 +104,50 @@
 
       let categoriesList = vm.shopping.model.categoriesList;
       let categoriesTotalCosts = [];
-      let categoriesTotalCostsWithoutZeroes = [];
+      // appHighchartsPie data creation - begin
+      // appHighchartsPie data template
       for (let i = 0; i < categoriesList.length; i++) {
         categoriesTotalCosts.push({
           name: categoriesList[i].category_name,
           y: 0
         });
-
+        // categories' total costs calculation
         for (let j = 0; j < inputData.length; j++) {
           if (categoriesTotalCosts[i].name == inputData[j].categoryName) {
             categoriesTotalCosts[i].y += inputData[j].productCost;
           }
         }
       }
-
+      // vm.shopping.model.categoriesTotalCosts filling without zeroes
       for (let i = 0; i < categoriesTotalCosts.length; i++) {
         if (categoriesTotalCosts[i].y > 0) {
-          categoriesTotalCostsWithoutZeroes.push(categoriesTotalCosts[i]);
+          vm.shopping.model.categoriesTotalCosts.push(categoriesTotalCosts[i]);
         }
       }
-
-      for (let i = 0; i < categoriesTotalCostsWithoutZeroes.length; i++) {
-        vm.shopping.model.categoriesTotalCosts.push(
-          categoriesTotalCostsWithoutZeroes[i]
-        );
-      }
+      // appHighchartsPie data creation - end
     }
 
     function emitShielduiGridInit() {
       $rootScope.$emit('shielduiGridInitialized');
+    }
+
+    function approveShoppingListPieAnimation(oldShoppingList, newShoppingList) {
+      return oldShoppingList.length == 0 && newShoppingList.length == 1
+        ? true
+        : false;
+    }
+
+    function createActualShoppingListBackup(
+      shielduiGridData,
+      previousShoppingList
+    ) {
+      previousShoppingList.length = 0;
+
+      if (shielduiGridData.length) {
+        for (let i = 0; i < shielduiGridData.length; i++) {
+          previousShoppingList.push(shielduiGridData[i]);
+        }
+      }
     }
   }
 })();

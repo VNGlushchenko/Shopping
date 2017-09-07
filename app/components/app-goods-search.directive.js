@@ -10,25 +10,22 @@
       link: function(scope, elem, attrs, ctrl) {
         ctrl.shopping.menu.createGoodsCatalog().then(() => {
           ctrl.menu.createTypeaheadOptions();
-          ctrl.menu.initTypeahead(ctrl.model.typeaheadOptions);
+          ctrl.menu.initTypeahead(elem, ctrl.model.typeaheadOptions);
         });
 
         elem.bind('typeahead:select', function(event, suggestion) {
           scope.$apply(function() {
-            $('#grid')
-              .swidget()
-              .addRow(ctrl.menu.createNewShoppingListItem(suggestion));
+            ctrl.shopping.model.shielduiGridRepository[0].addRow(
+              ctrl.menu.createNewShoppingListItem(suggestion)
+            );
 
-            $('#grid')
-              .swidget()
-              .saveChanges();
+            ctrl.shopping.model.shielduiGridRepository[0].saveChanges();
 
-            ctrl.shopping.model.shoppingListLength = $(
-              '#grid'
-            ).swidget().dataSource.data.length;
+            ctrl.shopping.model.actualShoppingListLength =
+              ctrl.shopping.model.shielduiGridRepository[0].dataSource.data.length;
 
             ctrl.shopping.menu.calcCategoriesTotalCosts(
-              $('#grid').swidget().dataSource.data
+              ctrl.shopping.model.shielduiGridRepository[0].dataSource.data
             );
 
             ctrl.shopping.menu.emitShielduiGridInit();

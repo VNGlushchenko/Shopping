@@ -1,30 +1,24 @@
 (function() {
   'use strict';
 
-  angular.module('shopping').directive('appHighchartsPie', function() {
+  angular.module('shopping').directive('appShoppingListPie', function() {
     return {
       restrict: 'E',
       template: '<div id="pie-new-shopping-list"></div>',
       controller: [
         'ShoppingModel',
         '$rootScope',
-        function(ShoppingModel, $rootScope) {
+        '$element',
+        function(ShoppingModel, $rootScope, $element) {
           let vm = this;
 
           vm.shopping = ShoppingModel;
 
-          vm.pieSeries = [
-            {
-              name: 'Доля',
-              colorByPoint: true,
-              data: vm.shopping.model.categoriesTotalCosts
-            }
-          ];
           vm.menu = {
-            initHighchartsPieChart: initHighchartsPieChart
+            initShoppingListPieChart: initShoppingListPieChart
           };
 
-          function initHighchartsPieChart() {
+          function initShoppingListPieChart() {
             $rootScope.$on('shielduiGridInitialized', () => {
               $('#pie-new-shopping-list').highcharts({
                 chart: {
@@ -55,17 +49,37 @@
                       enabled: false
                     },
                     showInLegend: true
+                  },
+                  series: {
+                    animation: vm.shopping.menu.approveShoppingListPieAnimation(
+                      vm.shopping.model.previousShoppingList,
+                      vm.shopping.model.shielduiGridRepository[0].dataSource
+                        .data
+                    )
+                      ? true
+                      : false
                   }
                 },
-                series: vm.pieSeries
+                series: [
+                  {
+                    name: 'Доля',
+                    colorByPoint: true,
+                    data: vm.shopping.model.categoriesTotalCosts
+                  }
+                ]
               });
+
+              vm.shopping.menu.createActualShoppingListBackup(
+                vm.shopping.model.shielduiGridRepository[0].dataSource.data,
+                vm.shopping.model.previousShoppingList
+              );
             });
           }
         }
       ],
-      controllerAs: 'pieShoppingListCtrl',
+      controllerAs: 'shoppingListPieCtrl',
       link: function(scope, elem, attrs, ctrl) {
-        ctrl.menu.initHighchartsPieChart();
+        ctrl.menu.initShoppingListPieChart();
       }
     };
   });

@@ -19,19 +19,19 @@
 
             </div>
 
-            <div class="col-xs-12" style="margin-top:50px;" ng-show="shielduiGridCtrl.shopping.model.shoppingListLength">
-                <app-highcharts-pie></app-highcharts-pie>
+            <div class="col-xs-12" style="margin-top:50px;" ng-show="shoppingListPieCtrl.shopping.model.actualShoppingListLength">
+                <app-shopping-list-pie></app-shopping-list-pie>
             </div>
 
 
         </div>
         <div class="col-xs-12 col-sm-9">
-            <img src="app/images/shopping_big_bag.png" class="img-responsive center-block" alt="shopping_big_bag" ng-show="!shielduiGridCtrl.shopping.model.shoppingListLength">
+            <img src="app/images/shopping_big_bag.png" class="img-responsive center-block" alt="shopping_big_bag" ng-show="!shielduiGridCtrl.shopping.model.actualShoppingListLength">
 
             <div class="row">
 
                 <div class="col-xs-12">
-                    <div id="grid" app-shieldui-lite-grid ng-show="shielduiGridCtrl.shopping.model.shoppingListLength"></div>
+                    <div id="grid" app-shieldui-lite-grid ng-show="shielduiGridCtrl.shopping.model.actualShoppingListLength"></div>
                 </div>
 
             </div>

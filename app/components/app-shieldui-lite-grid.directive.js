@@ -34,7 +34,7 @@
           function initShielduiLiteGrid() {
             $($element).shieldGrid({
               dataSource: {
-                data: [] /* vm.shopping.model.shoppingList */,
+                data: [],
                 schema: {
                   fields: {
                     categoryId: {
@@ -248,6 +248,7 @@
                     ].productUnit *
                       +e.target.dataSource.data[vm.model.indexLastEditedRow]
                         .productPrice).toFixed(2);
+
                     $($element)
                       .swidget()
                       .saveChanges();
@@ -283,10 +284,13 @@
             });
 
             $($element)[0].nextSibling.nodeValue = '';
-
             $($element)
               .next()
               .remove();
+
+            vm.shopping.model.shielduiGridRepository.push(
+              $($element).swidget()
+            );
           }
         }
       ],

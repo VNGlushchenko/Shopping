@@ -53,8 +53,8 @@
       vm.model.typeaheadOptions = typeaheadOptions;
     }
 
-    function initTypeahead(params) {
-      $($element).typeahead(...params);
+    function initTypeahead(element, params) {
+      element.typeahead(...params);
     }
 
     function createNewShoppingListItem(productName) {
