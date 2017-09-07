@@ -41,13 +41,6 @@
                       path: 'categoryId',
                       type: Number
                     },
-
-                    
-                       
-               
-  
-                         
-
                     categoryName: {
                       path: 'categoryName',
                       type: String
@@ -69,7 +62,6 @@
                         value <= 0
                           ? undefined
                           : +value.toFixed(3);
-
                       }
                     },
                     productPrice: {
