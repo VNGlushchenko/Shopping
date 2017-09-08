@@ -12,8 +12,20 @@
       controller: [
         'ShoppingModel',
         '$element',
-        function(ShoppingModel, $element) {
+        '$scope',
+        function(ShoppingModel, $element, $scope) {
           let vm = this;
+
+          $scope.setValidityForNewCategoryName = function(
+            field,
+            error_key,
+            error_bool
+          ) {
+            $scope.newCategoryNameForm[field].$setValidity(
+              error_key,
+              error_bool
+            );
+          };
 
           vm.shopping = ShoppingModel;
 
@@ -42,6 +54,14 @@
               },
               error => {
                 vm.model.newCategoryNameErrorText = error.data;
+
+                if (vm.model.newCategoryNameErrorText) {
+                  $scope.setValidityForNewCategoryName(
+                    'newCategoryName',
+                    'newCategoryName_error',
+                    false
+                  );
+                }
 
                 console.log(
                   'From anpbCtrl.shopping.menu.createNewCategory(data)  error callback:'
