@@ -7,6 +7,7 @@
     return {
       restrict: 'A',
       controller: 'appGoodsSearchController',
+      controllerAs: 'agsCtrl',
       link: function(scope, elem, attrs, ctrl) {
         ctrl.shopping.menu.createGoodsCatalog().then(() => {
           ctrl.menu.createTypeaheadOptions();

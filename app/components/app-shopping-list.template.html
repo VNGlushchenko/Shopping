@@ -7,13 +7,16 @@
                     <p style="font-weight:bold; color: gray; font-size:24px;">Новый список покупок:</p>
                 </div>
                 <div class="col-xs-12">
-                    <form class="form-inline">
+                    <form class="form-inline" name="shoppingListForm" novalidate>
                         <div class="form-group">
                             <div id="multiple-datasets">
-                                <input ng-model="shoppingList" app-goods-search class="typeahead" type="text" placeholder="Введите название товара">
+                                <input required name="productName" ng-model="productName" app-goods-search class="typeahead" type="text" placeholder="Введите название товара">
                             </div>
                         </div>
                         <div app-add-new-product-button style="display:inline-block;"></div>
+                        <div ng-messages="shoppingListForm.productName.$error">
+                            <div ng-message="productName_error">{{agsCtrl.model.newProductErrorText}}</div>
+                        </div>
                     </form>
                 </div>
 

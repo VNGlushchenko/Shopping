@@ -12,13 +12,18 @@
             <a href="#">{{category.category_name}}</a>
         </li>
         <li id="li-create-category">
-            <form class="form-inline">
+            <form class="form-inline" novalidate name="newCategoryName">
                 <div id="div-create-category" class="form-group input-group-sm" style="padding-left:20px; padding-top:3px; padding-bottom:3px;">
-                    <input type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию" style="border-radius: 0;">
+                    <input name="newCategoryName" required type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию"
+                        style="border-radius: 0;">
                 </div>
-                <button type="submit" id="new-category" class="btn btn-sm" style="border-radius: 0;" ng-click="anpbCtrl.menu.createNewCategory(anpbCtrl.model)">
+                <button ng-disabled="newCategoryName.$invalid" type="submit" id="new-category" class="btn btn-sm" style="border-radius: 0;"
+                    ng-click="anpbCtrl.menu.createNewCategory(anpbCtrl.model)">
                     <span class="glyphicon glyphicon-plus" id="new-category-span" style="color: green;"></span>
                 </button>
+                <div ng-messages="newCategoryName.productName.$error">
+                    <div ng-message="newCategoryName_error">{{anpbCtrl.model.newCategoryNameErrorText}}</div>
+                </div>
             </form>
         </li>
 

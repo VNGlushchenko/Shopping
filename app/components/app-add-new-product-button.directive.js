@@ -18,7 +18,8 @@
           vm.shopping = ShoppingModel;
 
           vm.model = {
-            newCategoryName: ''
+            newCategoryName: '',
+            newCategoryNameErrorText: ''
           };
           vm.menu = {
             initTooltip: initTooltip,
@@ -30,16 +31,23 @@
           }
 
           function createNewCategory(data) {
-            console.log('from vm.shopping.menu.createNewCategory(data)');
             vm.shopping.menu.createNewCategory(data).then(
               response => {
                 let newCategory = {};
-                newCategory.category_id = response.data[0];
-                newCategory.category_name = response.data[1];
+                newCategory.category_id = response.data.category_id;
+                newCategory.category_name = response.data.category_name;
                 vm.shopping.model.categoriesList.push(newCategory);
-                vm.model.newCategory = '';
+                vm.model.newCategoryName = '';
+                vm.model.newCategoryNameErrorText = '';
               },
-              error => console.log(error)
+              error => {
+                vm.model.newCategoryNameErrorText = error.data;
+
+                console.log(
+                  'From anpbCtrl.shopping.menu.createNewCategory(data)  error callback:'
+                );
+                console.log(error);
+              }
             );
           }
         }

@@ -13,7 +13,8 @@
     vm.shopping = ShoppingModel;
 
     vm.model = {
-      typeaheadOptions: []
+      typeaheadOptions: [],
+      newProductErrorText: ''
     };
 
     vm.menu = {

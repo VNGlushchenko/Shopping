@@ -22,6 +22,7 @@
             indexLastEditedRow: null,
             indexLastEditedCell: null
           };
+
           vm.menu = {
             asyncInitShielduiLiteGrid: asyncInitShielduiLiteGrid,
             initShielduiLiteGrid: initShielduiLiteGrid
