@@ -11,6 +11,7 @@
     vm.shopping = {
       model: {
         goodsCatalog: [],
+        newProductName: '',
         categoriesList: [],
         previousShoppingList: [],
         actualShoppingListLength: 0,
@@ -19,6 +20,7 @@
       },
       menu: {
         getAllGoods: getAllGoods,
+        createNewProduct: createNewProduct,
         createNewCategory: createNewCategory,
         createGoodsCatalog: createGoodsCatalog,
         calcCategoriesTotalCosts: calcCategoriesTotalCosts,
@@ -32,6 +34,10 @@
 
     function getAllGoods() {
       return $http.get(`${apiUrl}/goodsCatalog.json`); //$http.get(`${apiUrl}/getGoodsCatalog.php`);
+    }
+
+    function createNewProduct(data) {
+      return $http.post(`${apiUrl}/createNewProduct.php`, data);
     }
 
     function createNewCategory(data) {

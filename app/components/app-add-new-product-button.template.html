@@ -1,6 +1,7 @@
 <div class="btn-group">
-    <button id="new-product-tooltip" type="button" data-placement="auto right" title="Создать новый товар" class="btn btn-default dropdown-toggle"
-        style="border-radius: 0;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button ng-disabled="!agsCtrl.shopping.model.newProductName" id="new-product-tooltip" type="button" data-placement="auto right"
+        title="Создать новый товар" class="btn btn-default dropdown-toggle" style="border-radius: 0;" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus" style="color: green;"></span></button>
     <ul class="dropdown-menu" style="width: 240px;">
         <li class="disabled" id="not-allowed-li-choose-category">
@@ -14,19 +15,18 @@
         <li id="li-create-category">
             <ng-form class="form-inline" novalidate name="newCategoryNameForm">
                 <div id="div-create-category" class="form-group input-group-sm" style="padding-left:20px; padding-top:3px; padding-bottom:3px;">
-                    <input name="newCategoryName" app-check-new-category-name check-categories-list="anpbCtrl.shopping.model.categoriesList"
-                        required type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию"
-                        style="border-radius: 0;">
+                    <input name="newCategoryName" required type="text" error-message="anpbCtrl.model.newCategoryNameErrorText" ng-model="anpbCtrl.model.newCategoryName"
+                        app-check-new-category-name check-categories-list="anpbCtrl.shopping.model.categoriesList" class="form-control"
+                        placeholder="Создать новую категорию" style="border-radius: 0;">
                 </div>
                 <button ng-disabled="newCategoryNameForm.$invalid" type="submit" id="new-category" class="btn btn-sm" style="border-radius: 0;"
                     ng-click="anpbCtrl.menu.createNewCategory(anpbCtrl.model)">
                     <span class="glyphicon glyphicon-plus" id="new-category-span" style="color: green;"></span>
                 </button>
-                <div ng-messages="newCategoryNameForm.newCategoryName.$error" style="padding-left:20px; padding-top:3px; padding-bottom:3px; color:red; font-size:0.8em; font-weight: bold;">
-                    <div ng-message="newCategoryName_error">{{anpbCtrl.model.newCategoryNameErrorText}}</div>
+                <div id="new-category-name-error-out" ng-messages="newCategoryNameForm.newCategoryName.$error" style="padding-left:20px; padding-top:3px; padding-bottom:3px; color:red; font-size:0.8em; font-weight: bold;">
+                    <div id="new-category-name-error-inner" ng-message="newCategoryName_error">{{anpbCtrl.model.newCategoryNameErrorText}}</div>
                 </div>
             </ng-form>
         </li>
-
     </ul>
 </div>

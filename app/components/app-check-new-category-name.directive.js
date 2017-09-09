@@ -10,25 +10,24 @@
       restrict: 'A',
       require: 'ngModel',
       scope: {
-        check_categories_list: '<checkCategoriesList'
+        check_categories_list: '<checkCategoriesList',
+        errorMessage: '='
       },
       link: function(scope, elem, attrs, ctrl) {
-        let isValid = true;
-
         ctrl.$validators.newCategoryName_error = function(modelValue) {
-          while (isValid) {
-            for (let i = 0; i < scope.check_categories_list.length; i++) {
-              if (modelValue == scope.check_categories_list[i].category_name) {
-                isValid = false;
-                break;
-              }
+          for (let i = 0; i < scope.check_categories_list.length; i++) {
+            if (
+              modelValue.trim() == scope.check_categories_list[i].category_name
+            ) {
+              scope.errorMessage =
+                'Такая категория уже есть в каталоге. Измените название категории.';
+              return false;
             }
           }
-          return isValid;
+
+          return true;
         };
       }
     };
   }
 })();
-
-//check-categories-list="anpbCtrl.shopping.model.categoriesList"

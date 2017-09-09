@@ -14,6 +14,7 @@
 
     vm.model = {
       typeaheadOptions: [],
+      newProduct: '',
       newProductErrorText: ''
     };
 

@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connect.php';
+require_once 'dbConnect.php';
 $query     = '
               SELECT t2.category_id,
                      t2.category_name,

@@ -10,7 +10,8 @@
                     <form class="form-inline" name="shoppingListForm" novalidate>
                         <div class="form-group">
                             <div id="multiple-datasets">
-                                <input required name="productName" ng-model="productName" app-goods-search class="typeahead" type="text" placeholder="Введите название товара">
+                                <input required name="productName" ng-model="agsCtrl.shopping.model.newProductName" app-goods-search class="typeahead" type="text"
+                                    placeholder="Введите название товара">
                             </div>
                         </div>
                         <div app-add-new-product-button style="display:inline-block;"></div>

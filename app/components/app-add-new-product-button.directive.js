@@ -35,11 +35,47 @@
           };
           vm.menu = {
             initTooltip: initTooltip,
+            createNewProductArgument: createNewProductArgument,
+            createNewProduct: createNewProduct,
             createNewCategory: createNewCategory
           };
 
           function initTooltip() {
             $('#new-product-tooltip').tooltip();
+          }
+
+          function createNewProductArgument(
+            productName,
+            categoryName,
+            categoriesList
+          ) {
+            let newProduct = {};
+            newProduct.product_name = productName;
+
+            let categoryNameIndex = null;
+            let categoryId;
+            let categories = categoriesList;
+
+            while (categoryNameIndex === null) {
+              for (let i = 0; i < categories.length; i++) {
+                if (categories[i].category_name.indexOf(categoryName) != -1) {
+                  categoryNameIndex = categories[i].category_name.indexOf(
+                    categoryName
+                  );
+                }
+              }
+            }
+
+            categoryId = categories[categoryNameIndex].category_id;
+            newProduct.category_id = categoryId;
+
+            return newProduct;
+          }
+
+          function createNewProduct(data) {
+            vm.shopping.menu
+              .createNewProduct(data)
+              .then(response => {}, error => {});
           }
 
           function createNewCategory(data) {
@@ -49,6 +85,18 @@
                 newCategory.category_id = response.data.category_id;
                 newCategory.category_name = response.data.category_name;
                 vm.shopping.model.categoriesList.push(newCategory);
+                vm.shopping.model.categoriesList.sort(function(a, b) {
+                  if (a.category_name > b.category_name) {
+                    return 1;
+                  }
+
+                  if (a.category_name < b.category_name) {
+                    return -1;
+                  }
+
+                  return 0;
+                });
+
                 vm.model.newCategoryName = '';
                 vm.model.newCategoryNameErrorText = '';
               },
@@ -78,29 +126,57 @@
         ctrl.menu.initTooltip();
 
         let lastClickedElem;
+        let lastClickedElemId;
+        let lastClickedElemOuterText;
 
         elem.bind('click', function(e) {
+          console.log('from click');
+          console.log(e);
+
           lastClickedElem = null;
+          lastClickedElemId = null;
+          lastClickedElemOuterText = null;
+
           if (e.target.attributes) {
             for (let i in e.target.attributes) {
               if (e.target.attributes[i].name == 'id') {
-                lastClickedElem = e.target.attributes[i].value;
+                lastClickedElemId = e.target.attributes[i].value;
               }
             }
           }
+
+          lastClickedElem = e.target.localName;
+          lastClickedElemOuterText = e.target.outerText;
         });
 
         elem.bind('hide.bs.dropdown', function(e) {
+          console.log('from hide.bs.dropdown');
+          console.log(e);
           if (
-            lastClickedElem == 'new-category-span' ||
-            lastClickedElem == 'new-category' ||
-            lastClickedElem == 'not-allowed-li-choose-category' ||
-            lastClickedElem == 'not-allowed-url-choose-category' ||
-            lastClickedElem == 'not-allowed-url-choose-category-text' ||
-            lastClickedElem == 'li-create-category' ||
-            lastClickedElem == 'div-create-category'
+            lastClickedElemId == 'new-category-span' ||
+            lastClickedElemId == 'new-category' ||
+            lastClickedElemId == 'not-allowed-li-choose-category' ||
+            lastClickedElemId == 'not-allowed-url-choose-category' ||
+            lastClickedElemId == 'not-allowed-url-choose-category-text' ||
+            lastClickedElemId == 'li-create-category' ||
+            lastClickedElemId == 'div-create-category' ||
+            lastClickedElemId == 'new-category-name-error' ||
+            lastClickedElemId == 'new-category-name-error-inner'
           ) {
             e.preventDefault();
+          } else {
+            if (
+              lastClickedElem == 'a' &&
+              lastClickedElemOuterText != 'Выберите категорию:'
+            ) {
+              ctrl.menu.createNewProduct(
+                ctrl.menu.createNewProductArgument(
+                  ctrl.shopping.model.newProductName,
+                  lastClickedElemOuterText,
+                  ctrl.shopping.model.categoriesList
+                )
+              );
+            }
           }
         });
       }
