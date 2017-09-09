@@ -14,7 +14,8 @@
         <li id="li-create-category">
             <ng-form class="form-inline" novalidate name="newCategoryNameForm">
                 <div id="div-create-category" class="form-group input-group-sm" style="padding-left:20px; padding-top:3px; padding-bottom:3px;">
-                    <input name="newCategoryName" required type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию"
+                    <input name="newCategoryName" app-check-new-category-name check-categories-list="anpbCtrl.shopping.model.categoriesList"
+                        required type="text" ng-model="anpbCtrl.model.newCategoryName" class="form-control" placeholder="Создать новую категорию"
                         style="border-radius: 0;">
                 </div>
                 <button ng-disabled="newCategoryNameForm.$invalid" type="submit" id="new-category" class="btn btn-sm" style="border-radius: 0;"

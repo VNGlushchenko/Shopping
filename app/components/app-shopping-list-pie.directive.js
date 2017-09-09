@@ -1,7 +1,11 @@
 (function() {
   'use strict';
 
-  angular.module('shopping').directive('appShoppingListPie', function() {
+  angular
+    .module('shopping')
+    .directive('appShoppingListPie', appShoppingListPie);
+
+  function appShoppingListPie() {
     return {
       restrict: 'E',
       template: '<div id="pie-new-shopping-list"></div>',
@@ -82,5 +86,5 @@
         ctrl.menu.initShoppingListPieChart();
       }
     };
-  });
+  }
 })();
