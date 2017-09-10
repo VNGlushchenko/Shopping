@@ -5,9 +5,13 @@
     .module('shopping')
     .controller('appGoodsSearchController', appGoodsSearchController);
 
-  appGoodsSearchController.$inject = ['ShoppingModel', '$element'];
+  appGoodsSearchController.$inject = [
+    'ShoppingModel',
+    '$element',
+    '$rootScope'
+  ];
 
-  function appGoodsSearchController(ShoppingModel, $element) {
+  function appGoodsSearchController(ShoppingModel, $element, $rootScope) {
     let vm = this;
 
     vm.shopping = ShoppingModel;
@@ -19,6 +23,7 @@
     vm.menu = {
       createTypeaheadOptions: createTypeaheadOptions,
       initTypeahead: initTypeahead,
+      reinitTypeahead: reinitTypeahead,
       createNewShoppingListItem: createNewShoppingListItem
     };
 
@@ -55,6 +60,15 @@
 
     function initTypeahead(element, params) {
       element.typeahead(...params);
+    }
+
+    function reinitTypeahead(element, params) {
+      $rootScope.$on('refreshTypeahead', () => {
+        vm.shopping.menu.createGoodsCatalog().then(() => {
+          vm.menu.createTypeaheadOptions();
+          vm.menu.initTypeahead(element, params);
+        });
+      });
     }
 
     function createNewShoppingListItem(productName) {

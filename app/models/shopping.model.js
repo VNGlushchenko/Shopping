@@ -26,6 +26,7 @@
         createGoodsCatalog: createGoodsCatalog,
         calcCategoriesTotalCosts: calcCategoriesTotalCosts,
         emitShielduiGridInit: emitShielduiGridInit,
+        emitRefreshTypeahead: emitRefreshTypeahead,
         approveShoppingListPieAnimation: approveShoppingListPieAnimation,
         createActualShoppingListBackup: createActualShoppingListBackup
       }
@@ -136,6 +137,10 @@
 
     function emitShielduiGridInit() {
       $rootScope.$emit('shielduiGridInitialized');
+    }
+
+    function emitRefreshTypeahead() {
+      $rootScope.$emit('refreshTypeahead');
     }
 
     function approveShoppingListPieAnimation(oldShoppingList, newShoppingList) {

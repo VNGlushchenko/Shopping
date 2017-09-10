@@ -14,6 +14,8 @@
           ctrl.menu.initTypeahead(elem, ctrl.model.typeaheadOptions);
         });
 
+        ctrl.menu.reinitTypeahead(elem, ctrl.model.typeaheadOptions);
+
         elem.bind('typeahead:select', function(event, suggestion) {
           scope.$apply(function() {
             ctrl.shopping.model.shielduiGridRepository[0].addRow(

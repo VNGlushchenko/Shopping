@@ -13,7 +13,8 @@
         'ShoppingModel',
         '$element',
         '$scope',
-        function(ShoppingModel, $element, $scope) {
+        '$rootScope',
+        function(ShoppingModel, $element, $scope, $rootScope) {
           let vm = this;
 
           $scope.setValidityForNewCategoryName = function(
@@ -91,6 +92,8 @@
                     goodsCatalog[i].products[1].push(responseData.product_name);
                     goodsCatalog[i].products[2].push(0);
 
+                    vm.shopping.menu.emitRefreshTypeahead();
+
                     break;
                   }
                 }
@@ -107,7 +110,7 @@
                 }
 
                 console.log(
-                  'From anpbCtrl.shopping.menu.createNewCategory(data)  error callback:'
+                  'From anpbCtrl.shopping.menu.createNewProduct(data)  error callback:'
                 );
                 console.log(error);
               }
