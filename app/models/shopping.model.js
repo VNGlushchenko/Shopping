@@ -12,6 +12,7 @@
       model: {
         goodsCatalog: [],
         newProductName: '',
+        newProductErrorText: '',
         categoriesList: [],
         previousShoppingList: [],
         actualShoppingListLength: 0,
@@ -33,7 +34,7 @@
     return vm.shopping;
 
     function getAllGoods() {
-      return $http.get(`${apiUrl}/goodsCatalog.json`); //$http.get(`${apiUrl}/getGoodsCatalog.php`);
+      return $http.get(`${apiUrl}/getGoodsCatalog.php`); //$http.get(`${apiUrl}/goodsCatalog.json`);
     }
 
     function createNewProduct(data) {

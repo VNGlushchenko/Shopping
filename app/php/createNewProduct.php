@@ -2,10 +2,14 @@
 require_once 'dbConnect.php';
 require_once 'prepareRequestData.php';
 
-$new_category_name = str_replace(array('\n','\r\n'), '', $req['newCategoryName']);
-$new_category_name = sanitizeMySQL($con, $new_category_name);
+$new_product_name = str_replace(array('\n','\r\n'), '', $req['product_name']);
+$new_product_name = sanitizeMySQL($con, $new_product_name);
 
-$query_select  = 'select * from tGoodsCategories where category_name = \'' . $new_category_name . '\'';
+$category_id = str_replace(array('\n','\r\n'), '', $req['category_id']);
+$category_id = sanitizeMySQL($con, $category_id);
+$category_id = $category_id * 1;
+
+$query_select  = 'select * from tGoods where product_name = \'' . $new_product_name . '\'';
 $result_select = mysqli_query($con, $query_select);
 
 if (mysqli_num_rows($result_select) > 0) {
@@ -14,31 +18,33 @@ if (mysqli_num_rows($result_select) > 0) {
     
     http_response_code(400);
     
-    echo 'Такая категория уже есть в каталоге. Измените название категории.';
+    echo 'Такой товар уже есть в каталоге. Измените название товара.';
 } else {
-    $query_insert = 'insert into tGoodsCategories(category_name) select \'' . $new_category_name . '\'';
+    $query_insert = 'insert into tGoods(product_name, category_id) select \'' . $new_product_name . '\', ' . $category_id;
     
     mysqli_query($con, $query_insert);
     $last_id = mysqli_insert_id($con);
     
-    $query_select  = 'select * from tGoodsCategories where category_id = ' . $last_id;
+    $query_select  = 'select * from tGoods where product_id = ' . $last_id;
     $result_select = mysqli_query($con, $query_select);
     
-    $categoryList = array(
-        'category_id' => -1,
-        'category_name' => ''
+    $new_product_list = array(
+        'product_id' => -1,
+        'product_name' => '',
+        'category_id' => -1
     );
     
     if (mysqli_num_rows($result_select)) {
         
         while ($row = mysqli_fetch_assoc($result_select)) {
-            $categoryList['category_id']   = $row['category_id'];
-            $categoryList['category_name'] = $row['category_name'];
+            $new_product_list['product_id']   = $row['product_id'];
+            $new_product_list['product_name'] = $row['product_name'];
+            $new_product_list['category_id']  = $row['category_id'];
         }
         mysqli_close($con);
         
         http_response_code(200);
-        echo json_encode($categoryList, JSON_NUMERIC_CHECK);
+        echo json_encode($new_product_list, JSON_NUMERIC_CHECK);
     }
 }
 ?>

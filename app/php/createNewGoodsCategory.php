@@ -24,7 +24,7 @@ if (mysqli_num_rows($result_select) > 0) {
     $query_select  = 'select * from tGoodsCategories where category_id = ' . $last_id;
     $result_select = mysqli_query($con, $query_select);
     
-    $categoryList = array(
+    $new_category_list = array(
         'category_id' => -1,
         'category_name' => ''
     );
@@ -32,13 +32,13 @@ if (mysqli_num_rows($result_select) > 0) {
     if (mysqli_num_rows($result_select)) {
         
         while ($row = mysqli_fetch_assoc($result_select)) {
-            $categoryList['category_id']   = $row['category_id'];
-            $categoryList['category_name'] = $row['category_name'];
+            $new_category_list['category_id']   = $row['category_id'];
+            $new_category_list['category_name'] = $row['category_name'];
         }
         mysqli_close($con);
         
         http_response_code(200);
-        echo json_encode($categoryList, JSON_NUMERIC_CHECK);
+        echo json_encode($new_category_list, JSON_NUMERIC_CHECK);
     }
 }
 ?>

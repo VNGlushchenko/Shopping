@@ -13,9 +13,7 @@
     vm.shopping = ShoppingModel;
 
     vm.model = {
-      typeaheadOptions: [],
-      newProduct: '',
-      newProductErrorText: ''
+      typeaheadOptions: []
     };
 
     vm.menu = {
@@ -60,16 +58,15 @@
     }
 
     function createNewShoppingListItem(productName) {
-      let productNameIndex = null;
+      let productNameIndex;
       let categoryIndex;
       let goodsCatalog = vm.shopping.model.goodsCatalog;
 
-      while (productNameIndex === null) {
-        for (let i = 0; i < goodsCatalog.length; i++) {
-          if (goodsCatalog[i].products[1].indexOf(productName) != -1) {
-            productNameIndex = goodsCatalog[i].products[1].indexOf(productName);
-            categoryIndex = i;
-          }
+      for (let i = 0; i < goodsCatalog.length; i++) {
+        if (goodsCatalog[i].products[1].indexOf(productName) != -1) {
+          productNameIndex = goodsCatalog[i].products[1].indexOf(productName);
+          categoryIndex = i;
+          break;
         }
       }
 

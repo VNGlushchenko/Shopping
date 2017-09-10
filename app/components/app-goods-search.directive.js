@@ -30,6 +30,7 @@
             );
 
             ctrl.shopping.menu.emitShielduiGridInit();
+            ctrl.shopping.model.newProductName = '';
           });
         });
       }

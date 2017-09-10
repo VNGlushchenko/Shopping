@@ -11,12 +11,12 @@
                         <div class="form-group">
                             <div id="multiple-datasets">
                                 <input required name="productName" ng-model="agsCtrl.shopping.model.newProductName" app-goods-search class="typeahead" type="text"
-                                    placeholder="Введите название товара">
+                                    placeholder="Введите название товара" app-check-new-product-name check-product-list="agsCtrl.shopping.model.goodsCatalog">
                             </div>
                         </div>
                         <div app-add-new-product-button style="display:inline-block;"></div>
-                        <div ng-messages="shoppingListForm.productName.$error">
-                            <div ng-message="productName_error">{{agsCtrl.model.newProductErrorText}}</div>
+                        <div ng-messages="shoppingListForm.productName.$error" style="padding-top:3px; color:red; font-size:1.1em; font-weight: bold;">
+                            <div ng-message="newProductName_error">{{agsCtrl.shopping.model.newProductErrorText}}</div>
                         </div>
                     </form>
                 </div>

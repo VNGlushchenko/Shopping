@@ -27,6 +27,14 @@
             );
           };
 
+          $scope.setValidityForNewProduct = function(
+            field,
+            error_key,
+            error_bool
+          ) {
+            $scope.shoppingListForm[field].$setValidity(error_key, error_bool);
+          };
+
           vm.shopping = ShoppingModel;
 
           vm.model = {
@@ -52,17 +60,14 @@
             let newProduct = {};
             newProduct.product_name = productName;
 
-            let categoryNameIndex = null;
+            let categoryNameIndex;
             let categoryId;
             let categories = categoriesList;
 
-            while (categoryNameIndex === null) {
-              for (let i = 0; i < categories.length; i++) {
-                if (categories[i].category_name.indexOf(categoryName) != -1) {
-                  categoryNameIndex = categories[i].category_name.indexOf(
-                    categoryName
-                  );
-                }
+            for (let i = 0; i < categories.length; i++) {
+              if (categories[i].category_name.indexOf(categoryName) != -1) {
+                categoryNameIndex = i;
+                break;
               }
             }
 
@@ -73,9 +78,40 @@
           }
 
           function createNewProduct(data) {
-            vm.shopping.menu
-              .createNewProduct(data)
-              .then(response => {}, error => {});
+            vm.shopping.menu.createNewProduct(data).then(
+              response => {
+                let responseData = response.data;
+                let goodsCatalog = vm.shopping.model.goodsCatalog;
+
+                for (let i = 0; i < goodsCatalog.length; i++) {
+                  if (
+                    goodsCatalog[i].category_id === responseData.category_id
+                  ) {
+                    goodsCatalog[i].products[0].push(responseData.product_id);
+                    goodsCatalog[i].products[1].push(responseData.product_name);
+                    goodsCatalog[i].products[2].push(0);
+
+                    break;
+                  }
+                }
+              },
+              error => {
+                vm.shopping.model.newProductErrorText = error.data;
+
+                if (vm.shopping.model.newProductErrorText) {
+                  $scope.setValidityForNewProduct(
+                    'productName',
+                    'newProductName_error',
+                    false
+                  );
+                }
+
+                console.log(
+                  'From anpbCtrl.shopping.menu.createNewCategory(data)  error callback:'
+                );
+                console.log(error);
+              }
+            );
           }
 
           function createNewCategory(data) {
@@ -130,9 +166,6 @@
         let lastClickedElemOuterText;
 
         elem.bind('click', function(e) {
-          console.log('from click');
-          console.log(e);
-
           lastClickedElem = null;
           lastClickedElemId = null;
           lastClickedElemOuterText = null;
@@ -150,8 +183,6 @@
         });
 
         elem.bind('hide.bs.dropdown', function(e) {
-          console.log('from hide.bs.dropdown');
-          console.log(e);
           if (
             lastClickedElemId == 'new-category-span' ||
             lastClickedElemId == 'new-category' ||
