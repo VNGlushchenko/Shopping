@@ -23,6 +23,7 @@
         getAllGoods: getAllGoods,
         createNewProduct: createNewProduct,
         createNewCategory: createNewCategory,
+        saveSalesReceipt: saveSalesReceipt,
         createGoodsCatalog: createGoodsCatalog,
         calcCategoriesTotalCosts: calcCategoriesTotalCosts,
         emitShielduiGridInit: emitShielduiGridInit,
@@ -44,6 +45,10 @@
 
     function createNewCategory(data) {
       return $http.post(`${apiUrl}/createNewGoodsCategory.php`, data);
+    }
+
+    function saveSalesReceipt(data) {
+      return $http.post(`${apiUrl}/saveSalesReceipt.php`, data);
     }
 
     function createGoodsCatalog() {

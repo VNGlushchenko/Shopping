@@ -116,9 +116,14 @@
                       caption: 'Сохранить покупки в архив',
                       click: function(e) {
                         //e.preventDefault;
-                        console.log(
-                          JSON.stringify($($element).swidget().dataSource.data)
-                        );
+                        vm.shopping.menu
+                          .saveSalesReceipt({
+                            salesReceipt: $($element).swidget().dataSource.data
+                          })
+                          .then(
+                            response => console.log(response.data),
+                            error => console.log(error)
+                          );
                       }
                     }
                   ]
