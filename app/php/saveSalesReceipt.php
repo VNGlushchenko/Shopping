@@ -4,44 +4,45 @@ require_once 'prepareRequestData.php';
 
 $sales_receipt = str_replace(array('\n','\r\n'), '', $req['salesReceipt']);
 
-echo $sales_receipt[0]['purchaseDate'];
-//var_dump($sales_receipt);
-/* $new_category_name = sanitizeMySQL($con, $new_category_name);
+$sales_receipt_id = str_replace(array('\n','\r\n'), '', $req['salesReceiptId']);
+$sales_receipt_id = sanitizeMySQL($con, $sales_receipt_id);
 
-$query_select  = 'select * from tGoodsCategories where category_name = \'' . $new_category_name . '\'';
-$result_select = mysqli_query($con, $query_select);
+$insert_rows_count = 0;
 
-if (mysqli_num_rows($result_select) > 0) {
-    
-    mysqli_close($con);
-    
-    http_response_code(400);
-    
-    echo 'Такая категория уже есть в каталоге. Измените название категории.';
-} else {
-    $query_insert = 'insert into tGoodsCategories(category_name) select \'' . $new_category_name . '\'';
-    
-    mysqli_query($con, $query_insert);
-    $last_id = mysqli_insert_id($con);
-    
-    $query_select  = 'select * from tGoodsCategories where category_id = ' . $last_id;
-    $result_select = mysqli_query($con, $query_select);
-    
-    $new_category_list = array(
-        'category_id' => -1,
-        'category_name' => ''
-    );
-    
-    if (mysqli_num_rows($result_select)) {
-        
-        while ($row = mysqli_fetch_assoc($result_select)) {
-            $new_category_list['category_id']   = $row['category_id'];
-            $new_category_list['category_name'] = $row['category_name'];
+if (count($sales_receipt) > 0) {
+foreach ($sales_receipt as $item) {
+    if (
+        gettype($item['productId']) == 'integer' &&
+        (gettype($item['productUnit']) == 'integer' || gettype($item['productUnit']) == 'double') &&
+        (gettype($item['productPrice']) == 'integer' || gettype($item['productPrice']) == 'double') &&
+        (gettype($item['productCost']) == 'integer' || gettype($item['productCost']) == 'double') &&
+        gettype($item['purchaseDate']) == 'string' &&
+        gettype($sales_receipt_id) == 'string'
+        ) {
+            $query_insert = 'insert into tPurchases
+                            set purchase_date=\''.$item['purchaseDate'].'\', '.
+                                'product_id='.$item['productId'].', '.
+                                'unit='.$item['productUnit'].', '.
+                                'price='.$item['productPrice'].', '.
+                                'cost='.$item['productCost'].', '.
+                                'sales_receipt_id=\''.$sales_receipt_id.'\'';
+            
+            mysqli_query($con, $query_insert);
+            $insert_rows_count++;
         }
-        mysqli_close($con);
-        
-        http_response_code(200);
-        echo json_encode($new_category_list, JSON_NUMERIC_CHECK);
     }
-} */
+
+mysqli_close($con);
+
+if (count($sales_receipt) == $insert_rows_count) {
+    http_response_code(200);
+    echo 'Данные успешно сохранены в архив покупок.';
+} else {
+    http_response_code(400);
+    echo 'При сохранении данных произошла ошибка.';
+}
+} else {
+    http_response_code(400);
+    echo 'Нет данных для сохранения в архив покупок.';
+}
 ?>

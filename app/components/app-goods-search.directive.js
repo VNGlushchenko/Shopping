@@ -9,10 +9,13 @@
       controller: 'appGoodsSearchController',
       controllerAs: 'agsCtrl',
       link: function(scope, elem, attrs, ctrl) {
-        ctrl.shopping.menu.createGoodsCatalog().then(() => {
-          ctrl.menu.createTypeaheadOptions();
-          ctrl.menu.initTypeahead(elem, ctrl.model.typeaheadOptions);
-        });
+        ctrl.shopping.menu.createGoodsCatalog().then(
+          () => {
+            ctrl.menu.createTypeaheadOptions();
+            ctrl.menu.initTypeahead(elem, ctrl.model.typeaheadOptions);
+          },
+          error => console.log(error)
+        );
 
         ctrl.menu.reinitTypeahead(elem, ctrl.model.typeaheadOptions);
 

@@ -11,11 +11,11 @@ $query     = '
                 LEFT JOIN tPurchases                         as t3 on t3.product_id  = t1.product_id
                 LEFT JOIN (
                            SELECT product_id,
-                                  MAX(p_date) as last_date
+                                  MAX(purchase_date) as last_date
                              FROM tPurchases
                             GROUP BY product_id
                           )                                  as t4 on t4.product_id = t3.product_id
-                                                                  and t4.last_date  = t3.p_date
+                                                                  and t4.last_date  = t3.purchase_date
                WHERE t1.category_id <> 4 
                GROUP BY t2.category_id,
                         t2.category_name,

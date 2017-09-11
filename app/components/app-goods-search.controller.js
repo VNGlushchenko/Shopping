@@ -64,7 +64,7 @@
 
     function reinitTypeahead(element, params) {
       $rootScope.$on('refreshTypeahead', () => {
-        element.typeahead('destroy');
+        //element.typeahead('destroy');
         vm.shopping.menu.createGoodsCatalog().then(() => {
           vm.menu.createTypeaheadOptions();
           vm.menu.initTypeahead(element, params);

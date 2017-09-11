@@ -115,10 +115,10 @@
                       commandName: 'details',
                       caption: 'Сохранить покупки в архив',
                       click: function(e) {
-                        //e.preventDefault;
                         vm.shopping.menu
                           .saveSalesReceipt({
-                            salesReceipt: $($element).swidget().dataSource.data
+                            salesReceipt: $($element).swidget().dataSource.data,
+                            salesReceiptId: Date.now()
                           })
                           .then(
                             response => console.log(response.data),
