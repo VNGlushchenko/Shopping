@@ -56,15 +56,23 @@
       }
 
       vm.model.typeaheadOptions = typeaheadOptions;
+
+      for (let i = 1; i < vm.model.typeaheadOptions.length; i++) {
+        vm.model.typeaheadOptions[i].source.initialize(true);
+      }
+      console.log('-------------------------------------------------------');
+      console.log(JSON.stringify(vm.model.typeaheadOptions));
     }
 
     function initTypeahead(element, params) {
+      console.log('-------------------------------------------------------');
       element.typeahead(...params);
+      console.log('Typeahead has been created');
+      console.log('-------------------------------------------------------');
     }
 
     function reinitTypeahead(element, params) {
       $rootScope.$on('refreshTypeahead', () => {
-        //element.typeahead('destroy');
         vm.shopping.menu.createGoodsCatalog().then(() => {
           vm.menu.createTypeaheadOptions();
           vm.menu.initTypeahead(element, params);

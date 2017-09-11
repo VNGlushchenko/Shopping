@@ -81,7 +81,7 @@
           function createNewProduct(data) {
             vm.shopping.menu.createNewProduct(data).then(
               response => {
-                let responseData = response.data;
+                /*    let responseData = response.data;
                 let goodsCatalog = vm.shopping.model.goodsCatalog;
 
                 for (let i = 0; i < goodsCatalog.length; i++) {
@@ -96,7 +96,7 @@
 
                     break;
                   }
-                }
+                } */ vm.shopping.menu.emitRefreshTypeahead();
               },
               error => {
                 vm.shopping.model.newProductErrorText = error.data;
