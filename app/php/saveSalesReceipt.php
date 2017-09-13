@@ -36,13 +36,13 @@ mysqli_close($con);
 
 if (count($sales_receipt) == $insert_rows_count) {
     http_response_code(200);
-    echo 'Данные успешно сохранены в архив покупок.';
+    echo 'Данные успешно сохранены.';
 } else {
     http_response_code(400);
-    echo 'При сохранении данных произошла ошибка.';
+    echo 'Ошибка сохранения данных.';
 }
 } else {
     http_response_code(400);
-    echo 'Нет данных для сохранения в архив покупок.';
+    echo 'Пустой список покупок.';
 }
 ?>

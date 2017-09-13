@@ -69,19 +69,10 @@
       typeaheadOptions.forEach(option =>
         vm.model.typeaheadOptions.push(option)
       );
-
-      /*  for (let i = 1; i < vm.model.typeaheadOptions.length; i++) {
-        vm.model.typeaheadOptions[i].source.initialize(true);
-      } */
-      console.log('-------------------------------------------------------');
-      console.log(JSON.stringify(vm.model.typeaheadOptions));
     }
 
     function initTypeahead(element, params) {
-      console.log('-------------------------------------------------------');
       element.typeahead(...params);
-      console.log('Typeahead has been created');
-      console.log('-------------------------------------------------------');
     }
 
     function reinitTypeahead(element, params) {

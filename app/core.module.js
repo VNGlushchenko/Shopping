@@ -8,7 +8,9 @@
       'toastrConfig',
       function(toastrConfig) {
         angular.extend(toastrConfig, {
-          closeButton: true
+          closeButton: true,
+          preventOpenDuplicates: true,
+          positionClass: 'toast-bottom-right'
         });
       }
     ]);

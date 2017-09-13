@@ -121,8 +121,15 @@
                             salesReceiptId: Date.now()
                           })
                           .then(
-                            response => console.log(response.data),
-                            error => console.log(error)
+                            response => {
+                              vm.shopping.model.actualShoppingListLength = 0;
+                              $($element).swidget().dataSource.data.length = 0;
+                              toastr.success(response.data);
+                            },
+                            error => {
+                              toastr.error(error.data, 'Ошибка!');
+                              console.log(error);
+                            }
                           );
                       }
                     }
