@@ -8,16 +8,28 @@
   appGoodsSearchController.$inject = [
     'ShoppingModel',
     '$element',
-    '$rootScope'
+    '$rootScope',
+    '$scope',
+    '$timeout'
   ];
 
-  function appGoodsSearchController(ShoppingModel, $element, $rootScope) {
+  function appGoodsSearchController(
+    ShoppingModel,
+    $element,
+    $rootScope,
+    $scope,
+    $timeout
+  ) {
     let vm = this;
 
     vm.shopping = ShoppingModel;
 
     vm.model = {
-      typeaheadOptions: []
+      typeaheadOptions: [
+        {
+          highlight: true
+        }
+      ]
     };
 
     vm.menu = {
@@ -30,9 +42,6 @@
     function createTypeaheadOptions() {
       let typeaheadOptions = [];
       let goodsListLength = vm.shopping.model.goodsCatalog.length;
-      typeaheadOptions.push({
-        highlight: true
-      });
 
       for (let i = 0; i < goodsListLength; i++) {
         typeaheadOptions.push({
@@ -54,12 +63,16 @@
           }
         });
       }
+      // for reinitTypeahead
+      vm.model.typeaheadOptions.length = 1;
 
-      vm.model.typeaheadOptions = typeaheadOptions;
+      typeaheadOptions.forEach(option =>
+        vm.model.typeaheadOptions.push(option)
+      );
 
-      for (let i = 1; i < vm.model.typeaheadOptions.length; i++) {
+      /*  for (let i = 1; i < vm.model.typeaheadOptions.length; i++) {
         vm.model.typeaheadOptions[i].source.initialize(true);
-      }
+      } */
       console.log('-------------------------------------------------------');
       console.log(JSON.stringify(vm.model.typeaheadOptions));
     }
@@ -74,8 +87,14 @@
     function reinitTypeahead(element, params) {
       $rootScope.$on('refreshTypeahead', () => {
         vm.shopping.menu.createGoodsCatalog().then(() => {
+          element.typeahead('destroy');
           vm.menu.createTypeaheadOptions();
           vm.menu.initTypeahead(element, params);
+          $timeout(function() {
+            $($element).trigger('typeahead:select', [
+              vm.shopping.model.newProductName
+            ]);
+          }, 0);
         });
       });
     }

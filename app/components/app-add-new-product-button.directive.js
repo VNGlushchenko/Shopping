@@ -81,22 +81,7 @@
           function createNewProduct(data) {
             vm.shopping.menu.createNewProduct(data).then(
               response => {
-                /*    let responseData = response.data;
-                let goodsCatalog = vm.shopping.model.goodsCatalog;
-
-                for (let i = 0; i < goodsCatalog.length; i++) {
-                  if (
-                    goodsCatalog[i].category_id === responseData.category_id
-                  ) {
-                    goodsCatalog[i].products[0].push(responseData.product_id);
-                    goodsCatalog[i].products[1].push(responseData.product_name);
-                    goodsCatalog[i].products[2].push(0);
-
-                    vm.shopping.menu.emitRefreshTypeahead();
-
-                    break;
-                  }
-                } */ vm.shopping.menu.emitRefreshTypeahead();
+                vm.shopping.menu.emitRefreshTypeahead();
               },
               error => {
                 vm.shopping.model.newProductErrorText = error.data;
