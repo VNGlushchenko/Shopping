@@ -6,24 +6,35 @@ $query     = '
                      t1.product_id,
                      t1.product_name,
                      COALESCE(MAX(t3.price),0) as last_price
-                FROM tGoods                                  as t1
-                JOIN tGoodsCategories                        as t2 on t2.category_id = t1.category_id
-                LEFT JOIN tPurchases                         as t3 on t3.product_id  = t1.product_id
-                LEFT JOIN (
+                FROM tGoods           as t1
+                JOIN tGoodsCategories as t2 on t2.category_id = t1.category_id
+                LEFT JOIN tPurchases  as t3 on t3.product_id  = t1.product_id
+                JOIN      (
                            SELECT product_id,
                                   MAX(purchase_date) as last_date
                              FROM tPurchases
                             GROUP BY product_id
-                          )                                  as t4 on t4.product_id = t3.product_id
-                                                                  and t4.last_date  = t3.purchase_date
-               WHERE t1.category_id <> 4 
-               GROUP BY t2.category_id,
+                          )           as t4 on t4.product_id = t3.product_id
+                                           and t4.last_date  = t3.purchase_date
+
+                GROUP BY t2.category_id,
                         t2.category_name,
                         t1.product_id,
                         t1.product_name
-               ORDER BY t2.category_name, 
-                        t1.product_name
+                UNION ALL
+               SELECT t2.category_id,
+                      t2.category_name,
+                      t1.product_id,
+                      t1.product_name,
+                      0 as last_price
+                 FROM tGoods           as t1
+                 JOIN tGoodsCategories as t2 on t2.category_id = t1.category_id
+                 LEFT JOIN tPurchases  as t3 on t3.product_id  = t1.product_id
+                WHERE t3.product_id is NULL
+                ORDER BY category_name, 
+                         product_name
              ';
+
 $result        = mysqli_query($con, $query);
 $category_id   = array();
 $category_name = array();
