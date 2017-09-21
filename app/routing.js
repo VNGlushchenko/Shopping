@@ -14,7 +14,7 @@
         })
         .state('shoppingStatistics', {
           url: '/statistics',
-          component: 'appShoppingStatistics'
+          templateUrl: 'app/components/app-shopping-statistics.template.html'
         });
     }
   ]);

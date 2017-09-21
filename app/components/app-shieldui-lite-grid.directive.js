@@ -14,7 +14,15 @@
         '$timeout',
         'toastr',
         '$rootScope',
-        function(ShoppingModel, $element, $timeout, toastr, $rootScope) {
+        '$scope',
+        function(
+          ShoppingModel,
+          $element,
+          $timeout,
+          toastr,
+          $rootScope,
+          $scope
+        ) {
           let vm = this;
           vm.shopping = ShoppingModel;
 
@@ -25,11 +33,26 @@
 
           vm.menu = {
             asyncInitShielduiLiteGrid: asyncInitShielduiLiteGrid,
+            truncateShoppingList: truncateShoppingList,
             initShielduiLiteGrid: initShielduiLiteGrid
           };
 
           function asyncInitShielduiLiteGrid() {
             $timeout(initShielduiLiteGrid, 0);
+          }
+
+          function truncateShoppingList() {
+            vm.shopping.model.shielduiGridRepository[0].dataSource.data.length = 0;
+
+            $($element)
+              .swidget()
+              .saveChanges();
+
+            vm.shopping.menu.calcCategoriesTotalCosts(
+              vm.shopping.model.shielduiGridRepository[0].dataSource.data
+            );
+
+            vm.shopping.menu.emitShielduiGridInit();
           }
 
           function initShielduiLiteGrid() {
@@ -111,19 +134,35 @@
                 {
                   buttons: [
                     {
-                      cls: 'save',
+                      cls: 'clean-grid',
+                      commandName: 'details',
+                      caption: 'Очистить список покупок',
+                      click: function(e) {
+                        $timeout(vm.menu.truncateShoppingList, 0);
+                      }
+                    },
+                    {
+                      cls: 'save-shopping-list',
                       commandName: 'details',
                       caption: 'Сохранить покупки в архив',
                       click: function(e) {
+                        vm.shopping.model.shielduiGridRepository[0].dataSource.data.forEach(
+                          option => {
+                            option.productPrice = +option.productPrice;
+                            option.productUnit = +option.productUnit;
+                          }
+                        );
                         vm.shopping.menu
                           .saveSalesReceipt({
-                            salesReceipt: $($element).swidget().dataSource.data,
+                            salesReceipt:
+                              vm.shopping.model.shielduiGridRepository[0]
+                                .dataSource.data,
                             salesReceiptId: Date.now()
                           })
                           .then(
                             response => {
-                              vm.shopping.model.actualShoppingListLength = 0;
-                              $($element).swidget().dataSource.data.length = 0;
+                              $timeout(vm.menu.truncateShoppingList, 0);
+
                               toastr.success(response.data);
                             },
                             error => {

@@ -1,12 +1,13 @@
-header a {
-    color: lightgrey;
+header a:link,
+header a:hover,
+header a:visited,
+header a:active {
+    color: white;
     text-decoration: none;
 }
 
-header a:hover,
-header a:visited {
-    color: white;
-    text-decoration: none;
+.active {
+    background-color: gray;
 }
 
 header div.col-sm-6 {
@@ -94,4 +95,11 @@ div .sui-table td .invalid-back {
 
 .invalid-border {
     border: 1px solid red;
+}
+
+button.save-shopping-list {
+    background-color: #c6eec6;
+    border-color: green;
+    color: green;
+    font-weight: bold;
 }
