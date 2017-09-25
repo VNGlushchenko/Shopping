@@ -157,7 +157,8 @@
                             salesReceipt:
                               vm.shopping.model.shielduiGridRepository[0]
                                 .dataSource.data,
-                            salesReceiptId: Date.now()
+                            salesReceiptId: Date.now(),
+                            timezoneOffset: new Date().getTimezoneOffset()
                           })
                           .then(
                             response => {
@@ -239,7 +240,7 @@
                 {
                   field: 'productCost',
                   title: 'Стоимость, грн',
-                  width: '100px',
+                  width: '120px',
                   editable: false,
                   footerTemplate: 'Итого: {custom}',
                   attributes: {

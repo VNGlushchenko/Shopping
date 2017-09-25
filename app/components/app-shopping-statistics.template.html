@@ -1,0 +1,55 @@
+<div class="container-fluid" style="margin-top:10px;">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form name="statisticsForm" class="form-inline" novalidate style="border: 1px solid lightgray; padding: 15px 0 15px 18px;"
+                ng-submit="statisticsCtrl.menu.submitStatisticsForm()">
+                <div class="form-group">
+                    <label for="date-from">Отчет c</label>
+                    <input type="text" required name="dateFrom" ng-model="statisticsCtrl.statistics.model.inputStatisticsData.dateFrom" id="date-from"
+                        input-date="statisticsCtrl.statistics.model.inputStatisticsData.dateFrom" app-shieldui-lite-date-picker
+                        dates-validator="statisticsForm.dateTo" checking-date="statisticsCtrl.statistics.model.inputStatisticsData.dateTo">
+                </div>
+                <div class="form-group">
+                    <label for="date-to">по</label>
+                    <input type="text" required name="dateTo" ng-model="statisticsCtrl.statistics.model.inputStatisticsData.dateTo" id="date-to"
+                        input-date="statisticsCtrl.statistics.model.inputStatisticsData.dateTo" app-shieldui-lite-date-picker
+                        dates-validator="statisticsForm.dateTo" checking-date="statisticsCtrl.statistics.model.inputStatisticsData.dateFrom">
+                </div>
+                <div class="form-group" style="margin-left:5px;">
+                    <label for="categoriesList">для категории</label>
+                    <select id="categoriesList" name="categoriesList" ng-model="statisticsCtrl.statistics.model.inputStatisticsData.goodsCategory"
+                        style="padding: 4px 0 4px 0;" ng-change="statisticsForm.categoriesList.$setValidity('check_categories_list', true)">
+                        <option ng-value="0">Все</option>
+                        <option ng-repeat="category in statisticsCtrl.statistics.model.outputStatisticsData.categoriesList" ng-value="category.category_id">
+                            {{category.category_name}}
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" ng-disabled="statisticsForm.$invalid" class="btn btn-sm" style="border-radius: 0; background-color:#E7E5E5; margin-left:12px; padding: 4px 7px 4px 7px; border: 1px solid lightgray;">OK</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-messages="statisticsForm.dateFrom.$error" class="col-sm-6 col-sm-offset-3">
+            <div ng-message="required" class="required">Выберите первую дату!</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-messages="statisticsForm.dateTo.$error" class="col-sm-6 col-sm-offset-3">
+            <div ng-message="required" class="required">Выберите вторую дату!</div>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-messages="statisticsForm.dateTo.$error" class="col-sm-6 col-sm-offset-3">
+            <div ng-message="check_dates" class="check_dates">Вторая дата меньше первой!</div>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-messages="statisticsForm.categoriesList.$error" class="col-sm-6 col-sm-offset-3">
+            <div ng-message="check_categories_list" class="check_categories_list">Указана не существующая категория товара!</div>
+        </div>
+    </div>
+</div>

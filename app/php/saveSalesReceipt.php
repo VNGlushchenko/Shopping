@@ -7,6 +7,9 @@ $sales_receipt = str_replace(array('\n','\r\n'), '', $req['salesReceipt']);
 $sales_receipt_id = str_replace(array('\n','\r\n'), '', $req['salesReceiptId']);
 $sales_receipt_id = sanitizeMySQL($con, $sales_receipt_id);
 
+$timezone_offset = str_replace(array('\n','\r\n'), '', $req['timezoneOffset']);
+$timezone_offset = $timezone_offset * 1;
+
 $insert_rows_count = 0;
 
 if (count($sales_receipt) > 0) {
@@ -17,7 +20,8 @@ foreach ($sales_receipt as $item) {
         (gettype($item['productPrice']) == 'integer' || gettype($item['productPrice']) == 'double') &&
         (gettype($item['productCost']) == 'integer' || gettype($item['productCost']) == 'double') &&
         gettype($item['purchaseDate']) == 'string' &&
-        gettype($sales_receipt_id) == 'string'
+        gettype($sales_receipt_id) == 'string' &&
+        gettype($timezone_offset) == 'integer'
         ) {
             $query_insert = 'insert into tPurchases
                             set purchase_date=\''.$item['purchaseDate'].'\', '.
@@ -25,7 +29,8 @@ foreach ($sales_receipt as $item) {
                                 'unit='.$item['productUnit'].', '.
                                 'price='.$item['productPrice'].', '.
                                 'cost='.$item['productCost'].', '.
-                                'sales_receipt_id=\''.$sales_receipt_id.'\'';
+                                'sales_receipt_id=\''.$sales_receipt_id.'\', '.
+                                'timezone_offset='.$timezone_offset;
             
             mysqli_query($con, $query_insert);
             $insert_rows_count++;
