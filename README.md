@@ -1,2 +1,2 @@
 # Shopping
-training project
+Graduate Work in Agilie IT School
