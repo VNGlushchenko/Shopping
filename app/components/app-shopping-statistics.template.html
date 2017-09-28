@@ -84,34 +84,36 @@
                         <th>Название</th>
                         <th>Сумма</th>
                     </tr>
-                    <tr ng-repeat="pieChunk in statisticsCtrl.statistics.model.outputStatisticsData.pieChartData | limitTo : vm.pagination.countPerPage : vm.pagination.firstRowNumber">
+                    <tr ng-repeat="pieChunk in statisticsCtrl.statistics.model.outputStatisticsData.pieChartData">
+                        <!-- | limitTo : vm.pagination.countPerPage : vm.pagination.firstRowNumber -->
                         <td>{{$index+1}}</td>
                         <td>{{pieChunk.name}}</td>
                         <td>{{pieChunk.y | currency : '&#x20b4;'}}</td>
                     </tr>
                 </table>
             </div>
-            <!-- <div ng-show="vm.pagination.countPerPage < vm.pagination.rowCountTable">
+        </div>
+        <!-- <div ng-show="vm.pagination.countPerPage < vm.pagination.rowCountTable">
                 <button ng-click="vm.pagination.previousPage()" ng-disabled="vm.pagination.currentPage == 1">Назад</button>                {{vm.pagination.currentPage}} из {{vm.pagination.pagesCount}}
                 <button ng-click="vm.pagination.nextPage()" ng-disabled="vm.pagination.pagesCount == vm.pagination.currentPage">Вперед</button>
             </div> -->
 
-            <div class="col-sm-3 col-sm-offset-3" style="margin-top:40px;">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <caption class="text-center" style="font-size:18px; font-family:Arial; color:gray;">Динамика покупок</caption>
-                        <tr>
-                            <th>№</th>
-                            <th>Период</th>
-                            <th>Сумма</th>
-                        </tr>
-                        <tr ng-repeat="option in statisticsCtrl.statistics.model.outputStatisticsData.tableDynamicsData">
-                            <td>{{$index+1}}</td>
-                            <td>{{option.period}}</td>
-                            <td>{{option.value | currency : '&#x20b4;'}}</td>
-                        </tr>
-                    </table>
-                </div>
+        <div class="col-sm-3 col-sm-offset-3" style="margin-top:40px;">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <caption class="text-center" style="font-size:18px; font-family:Arial; color:gray;">Динамика покупок</caption>
+                    <tr>
+                        <th>№</th>
+                        <th>Период</th>
+                        <th>Сумма</th>
+                    </tr>
+                    <tr ng-repeat="option in statisticsCtrl.statistics.model.outputStatisticsData.tableDynamicsData">
+                        <td>{{$index+1}}</td>
+                        <td>{{option.period}}</td>
+                        <td>{{option.value | currency : '&#x20b4;'}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
+</div>
