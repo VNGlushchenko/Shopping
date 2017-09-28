@@ -44,16 +44,10 @@
                   .getStatisticsData(StatisticsModel.model.inputStatisticsData)
                   .then(
                     response => {
-                      console.log(response);
-
-                      StatisticsModel.model.outputStatisticsData.categoriesList =
-                        response.data.categories_list;
-
-                      StatisticsModel.model.outputStatisticsData.pieChartData =
-                        response.data.pie_chart_data;
-
-                      /* StatisticsModel.model.outputStatisticsData.dynamicsChartData =
-                        response.data.dynamics_chart_data; */
+                      StatisticsModel.menu.fillOutputStatisticsData(
+                        StatisticsModel,
+                        response
+                      );
                     },
                     error => console.log(error)
                   );
@@ -95,10 +89,17 @@
                     .getStatisticsData(vm.statistics.model.inputStatisticsData)
                     .then(
                       response => {
-                        console.log(response);
+                        vm.statistics.menu.fillOutputStatisticsData(
+                          vm.statistics,
+                          response
+                        );
                       },
                       error => {
                         console.log(error);
+                        $scope.statisticsForm.categoriesList.$setValidity(
+                          'check_categories_list',
+                          false
+                        );
                       }
                     );
                 } else {

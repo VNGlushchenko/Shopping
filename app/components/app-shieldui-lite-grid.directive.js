@@ -13,16 +13,7 @@
         '$element',
         '$timeout',
         'toastr',
-        '$rootScope',
-        '$scope',
-        function(
-          ShoppingModel,
-          $element,
-          $timeout,
-          toastr,
-          $rootScope,
-          $scope
-        ) {
+        function(ShoppingModel, $element, $timeout, toastr) {
           let vm = this;
           vm.shopping = ShoppingModel;
 

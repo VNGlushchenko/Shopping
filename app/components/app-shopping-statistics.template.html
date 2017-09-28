@@ -42,14 +42,28 @@
             <div ng-message="required" class="required">Выберите вторую дату!</div>
         </div>
     </div>
+
     <div class="row">
         <div ng-messages="statisticsForm.dateTo.$error" class="col-sm-6 col-sm-offset-3">
             <div ng-message="check_dates" class="check_dates">Вторая дата меньше первой!</div>
         </div>
     </div>
+
     <div class="row">
         <div ng-messages="statisticsForm.categoriesList.$error" class="col-sm-6 col-sm-offset-3">
             <div ng-message="check_categories_list" class="check_categories_list">Указана не существующая категория товара!</div>
         </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-3" style="margin-top:20px;">
+            <app-statistics-pie-chart></app-statistics-pie-chart>
+        </div>
+
+        <div class="col-sm-9" style="margin-top:20px;">
+            <app-statistics-dynamics-chart></app-statistics-dynamics-chart>
+        </div>
+
     </div>
 </div>

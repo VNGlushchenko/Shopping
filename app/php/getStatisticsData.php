@@ -37,11 +37,11 @@ if ($goods_category == 0) {
     $query_select  = 'SELECT t2.category_name,
                              SUM(t3.cost)     AS total_cost
                         FROM tGoods           AS t1
-                        JOIN tGoodsCategories AS t2 on t2.category_id = t1.category_id
-                        JOIN tPurchases       AS t3 on t3.product_id  = t1.product_id
+                        JOIN tGoodsCategories AS t2 ON t2.category_id = t1.category_id
+                        JOIN tPurchases       AS t3 ON t3.product_id  = t1.product_id
                        WHERE t3.purchase_date between \''.$date_from.'\' and \''.$date_to.'\'
                        GROUP BY t2.category_name
-                       ORDER BY t2.category_name';
+                       ORDER BY SUM(t3.cost) DESC';
     $result_select = mysqli_query($con, $query_select);
 
     $pie_chart_data = array();
@@ -50,24 +50,148 @@ if ($goods_category == 0) {
         
         while ($row = mysqli_fetch_assoc($result_select)) {
             $tmp = array(
-                'category_name' => '',
-                'total_cost' => 0
+                'name' => '',
+                'y' => 0
             );
-            $tmp['category_name']   = $row['category_name'];
-            $tmp['total_cost'] = $row['total_cost'];
+            $tmp['name']   = $row['category_name'];
+            $tmp['y'] = $row['total_cost'];
             $pie_chart_data[] = $tmp;
         }
     }
     //create goods consumption total data - end
     //-----------------------------------------
     //create dynamicsChart data - begin
+    $query_select  = 'SELECT DATE_FORMAT(t3.purchase_date, \'%Y\') AS year,
+                             DATE_FORMAT(t3.purchase_date, \'%c\') AS month,
+                             SUM(t3.cost)     AS total_cost
+                        FROM tGoods           AS t1
+                        JOIN tGoodsCategories AS t2 ON t2.category_id = t1.category_id
+                        JOIN tPurchases       AS t3 ON t3.product_id  = t1.product_id
+                       WHERE t3.purchase_date between \''.$date_from.'\' and \''.$date_to.'\'
+                       GROUP BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
+                                DATE_FORMAT(t3.purchase_date, \'%c\')
+                       ORDER BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
+                                DATE_FORMAT(t3.purchase_date, \'%c\')';
 
+    $result_select = mysqli_query($con, $query_select);
+
+    $dynamics_chart_data = array();
+    
+    $month         = array();
+    $year          = array();
+    $category_name = array();
+    $total_cost    = array();
+
+    if (mysqli_num_rows($result_select)) {
+        while ($row = mysqli_fetch_assoc($result_select)) {
+            $month[]         = $row['month'];
+            $year[]          = $row['year'];
+            $category_name[] = 'Все';
+            $total_cost[]    = $row['total_cost'];
+        }
+    }
+
+    $dynamics_chart_data[0] = $month;
+    $dynamics_chart_data[1] = $year;
+    $dynamics_chart_data[2] = $category_name;
+    $dynamics_chart_data[3] = $total_cost;
     //create dynamicsChart data - end
     $response = array(
+        'input_category_id' => $goods_category,
         'categories_list' => $categories_list,
-        'pie_data' => $pie_chart_data
+        'pie_chart_data' => $pie_chart_data,
+        'dynamics_chart_data' => $dynamics_chart_data
     );
-}
 
-echo json_encode($response, JSON_NUMERIC_CHECK);
+    http_response_code(200);
+    echo json_encode($response, JSON_NUMERIC_CHECK);
+
+} else {
+
+    $query_select  = 'SELECT category_id AS bool FROM tGoodsCategories WHERE category_id = '.$goods_category;
+    $result_select = mysqli_query($con, $query_select);
+    
+    if (!mysqli_num_rows($result_select)) {
+        http_response_code(400);
+        echo 'Указана не существующая категория товара!';
+    } else {
+            //create goods consumption total data - begin
+            $query_select  = 'SELECT t1.product_name,
+                                     SUM(t3.cost)     AS total_cost
+                                FROM tGoods           AS t1
+                                JOIN tGoodsCategories AS t2 ON t2.category_id = t1.category_id
+                                JOIN tPurchases       AS t3 ON t3.product_id  = t1.product_id
+                               WHERE t3.purchase_date between \''.$date_from.'\' and \''.$date_to.'\'
+                                 AND t2.category_id ='.$goods_category.'
+                               GROUP BY t1.product_name
+                               ORDER BY SUM(t3.cost) DESC';
+
+            $result_select = mysqli_query($con, $query_select);
+
+            $pie_chart_data = array();
+
+            if (mysqli_num_rows($result_select)) {
+
+                while ($row = mysqli_fetch_assoc($result_select)) {
+                    $tmp = array(
+                    'name' => '',
+                    'y' => 0
+                    );
+                    $tmp['name']   = $row['product_name'];
+                    $tmp['y'] = $row['total_cost'];
+                    $pie_chart_data[] = $tmp;
+                }
+            }
+            //create goods consumption total data - end
+            //-----------------------------------------
+            //create dynamicsChart data - begin
+            $query_select  = 'SELECT DATE_FORMAT(t3.purchase_date, \'%Y\') AS year,
+                                     DATE_FORMAT(t3.purchase_date, \'%c\') AS month,
+                                     t1.category_name,
+                                     SUM(t3.cost)     AS total_cost
+                                FROM tGoodsCategories AS t1
+                                JOIN tGoods           AS t2 ON t2.category_id = t1.category_id
+                                JOIN tPurchases       AS t3 ON t3.product_id  = t2.product_id
+                               WHERE t3.purchase_date between \''.$date_from.'\' and \''.$date_to.'\'
+                                 AND t1.category_id ='.$goods_category.'
+                               GROUP BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
+                                        DATE_FORMAT(t3.purchase_date, \'%c\'),
+                                        t1.category_name
+                               ORDER BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
+                                        DATE_FORMAT(t3.purchase_date, \'%c\'),
+                                        t1.category_name';
+
+            $result_select = mysqli_query($con, $query_select);
+
+            $dynamics_chart_data = array();
+
+            $month        = array();
+            $year         = array();
+            $category_name = array();
+            $total_cost   = array();
+
+            if (mysqli_num_rows($result_select)) {
+                while ($row = mysqli_fetch_assoc($result_select)) {
+                    $month[]         = $row['month'];
+                    $year[]          = $row['year'];
+                    $category_name[] = $row['category_name'];
+                    $total_cost[]    = $row['total_cost'];
+                }
+            }
+
+            $dynamics_chart_data[0] = $month;
+            $dynamics_chart_data[1] = $year;
+            $dynamics_chart_data[2] = $category_name;
+            $dynamics_chart_data[3] = $total_cost;
+            //create dynamicsChart data - end
+            $response = array(
+            'input_category_id' => $goods_category,
+            'pie_chart_data' => $pie_chart_data,
+            'dynamics_chart_data' => $dynamics_chart_data
+            );
+
+            http_response_code(200);
+            echo json_encode($response, JSON_NUMERIC_CHECK);
+    } 
+}
 ?>

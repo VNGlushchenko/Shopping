@@ -3,27 +3,27 @@
 
   angular
     .module('shopping')
-    .directive('appShoppingListPie', appShoppingListPie);
+    .directive('appStatisticsPieChart', appStatisticsPieChart);
 
-  function appShoppingListPie() {
+  function appStatisticsPieChart() {
     return {
       restrict: 'E',
-      template: '<div id="pie-new-shopping-list"></div>',
+      template: '<div id="statistics-pie-chart"></div>',
       controller: [
-        'ShoppingModel',
+        'StatisticsModel',
         '$rootScope',
-        function(ShoppingModel, $rootScope) {
+        function(StatisticsModel, $rootScope) {
           let vm = this;
 
-          vm.shopping = ShoppingModel;
+          vm.statistics = StatisticsModel;
 
           vm.menu = {
-            initShoppingListPieChart: initShoppingListPieChart
+            initStatisticsPieChart: initStatisticsPieChart
           };
 
-          function initShoppingListPieChart() {
-            $rootScope.$on('shielduiGridInitialized', () => {
-              $('#pie-new-shopping-list').highcharts({
+          function initStatisticsPieChart() {
+            $rootScope.$on('statisticsDataLoaded', () => {
+              $('#statistics-pie-chart').highcharts({
                 chart: {
                   plotBackgroundColor: null,
                   plotBorderWidth: null,
@@ -33,7 +33,7 @@
                   borderColor: '#ccc'
                 },
                 title: {
-                  text: 'Сумма чека в разрезе категорий',
+                  text: 'Расшифровка общей суммы покупок, %',
                   style: {
                     color: 'gray',
                     fontSize: '18px',
@@ -51,38 +51,24 @@
                     dataLabels: {
                       enabled: false
                     },
-                    showInLegend: true
-                  },
-                  series: {
-                    animation: vm.shopping.menu.approveShoppingListPieAnimation(
-                      vm.shopping.model.previousShoppingList,
-                      vm.shopping.model.shielduiGridRepository[0].dataSource
-                        .data
-                    )
-                      ? true
-                      : false
+                    showInLegend: false
                   }
                 },
                 series: [
                   {
                     name: 'Доля',
                     colorByPoint: true,
-                    data: vm.shopping.model.categoriesTotalCosts
+                    data: vm.statistics.model.outputStatisticsData.pieChartData
                   }
                 ]
               });
-
-              vm.shopping.menu.createActualShoppingListBackup(
-                vm.shopping.model.shielduiGridRepository[0].dataSource.data,
-                vm.shopping.model.previousShoppingList
-              );
             });
           }
         }
       ],
-      controllerAs: 'shoppingListPieCtrl',
+      controllerAs: 'statisticsPieCtrl',
       link: function(scope, elem, attrs, ctrl) {
-        ctrl.menu.initShoppingListPieChart();
+        ctrl.menu.initStatisticsPieChart();
       }
     };
   }
