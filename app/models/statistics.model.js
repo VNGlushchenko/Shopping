@@ -22,9 +22,20 @@
             xAxisCategories: [],
             seriesData: [],
             goodsCategoryName: ''
-          }
-        },
-        statisticsDataLoadingCounter: 0
+          },
+          tableDynamicsData: []
+        } /* ,
+        pagination: {
+          currentPage: 1,
+          rowCountTable: vm.model.orders.length,
+          pagesCount: 1,
+          countPerPage: vm.model.orders.length,
+          rowCountChange: rowCountChange,
+          nextPage: nextPage,
+          previousPage: previousPage,
+          firstRowNumber: 0,
+          rowCountTableChange: rowCountTableChange
+        } */
       },
       menu: {
         getStatisticsData: getStatisticsData,
@@ -35,6 +46,38 @@
     };
 
     return vm.statistics;
+
+    /*     function rowCountChange() {
+      vm.pagination.pagesCount = Math.ceil(
+        vm.pagination.rowCountTable / vm.pagination.countPerPage
+      );
+      vm.pagination.currentPage = 1;
+      vm.pagination.firstRowNumber = 0;
+    }
+
+    function nextPage() {
+      if (vm.pagination.pagesCount != vm.pagination.currentPage) {
+        vm.pagination.currentPage++;
+        vm.pagination.firstRowNumber += vm.pagination.countPerPage;
+      }
+    }
+
+    function previousPage() {
+      if (vm.pagination.currentPage != 1) {
+        vm.pagination.currentPage--;
+        vm.pagination.firstRowNumber -= vm.pagination.countPerPage;
+      }
+    }
+
+    function rowCountTableChange() {
+      vm.model.filteredOrders = $filter('orderStatus')(
+        vm.model.orders,
+        $scope.ordStatus
+      );
+      vm.pagination.rowCountTable = vm.model.filteredOrders.length;
+      vm.pagination.countPerPage = vm.pagination.rowCountTable;
+      rowCountChange();
+    } */
 
     function getStatisticsData(data) {
       return $http.post(`${apiUrl}/getStatisticsData.php`, data);
@@ -100,6 +143,7 @@
       obj.model.outputStatisticsData.dynamicsChartData.xAxisCategories.length = 0;
       obj.model.outputStatisticsData.dynamicsChartData.seriesData.length = 0;
       obj.model.outputStatisticsData.pieChartData.length = 0;
+      obj.model.outputStatisticsData.tableDynamicsData.length = 0;
 
       obj.model.outputStatisticsData.pieChartData = resp.data.pie_chart_data;
 
@@ -113,6 +157,16 @@
         obj.model.outputStatisticsData.dynamicsChartData.seriesData.push(
           resp.data.dynamics_chart_data[3][i]
         );
+
+        obj.model.outputStatisticsData.tableDynamicsData.push({
+          period:
+            vm.statistics.menu.getMonthName(
+              resp.data.dynamics_chart_data[0][i]
+            ) +
+            ' ' +
+            resp.data.dynamics_chart_data[1][i],
+          value: resp.data.dynamics_chart_data[3][i]
+        });
       }
 
       if (resp.data.dynamics_chart_data[2][0]) {

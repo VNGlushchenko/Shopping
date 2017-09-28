@@ -26,8 +26,7 @@
               $('#statistics-dynamics-chart').highcharts({
                 chart: {
                   type: 'column',
-                  borderWidth: 1,
-                  borderColor: '#ccc'
+                  height: 350
                 },
                 title: {
                   text:

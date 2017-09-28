@@ -29,8 +29,7 @@
                   plotBorderWidth: null,
                   plotShadow: false,
                   type: 'pie',
-                  borderWidth: 1,
-                  borderColor: '#ccc'
+                  height: 350
                 },
                 title: {
                   text: 'Расшифровка общей суммы покупок, %',

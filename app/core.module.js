@@ -2,13 +2,14 @@
   'use strict';
 
   angular
-    .module('shopping', ['ui.router', 'ngResource', 'ngMessages', 'toastr'])
+    .module('shopping', ['ui.router', 'ngMessages', 'toastr'])
     .constant('apiUrl', 'app/php')
     .run([
       'toastrConfig',
       '$rootScope',
       '$transitions',
-      function(toastrConfig, $rootScope, $transitions) {
+      'ShoppingModel',
+      function(toastrConfig, $rootScope, $transitions, ShoppingModel) {
         angular.extend(toastrConfig, {
           closeButton: true,
           preventOpenDuplicates: true,
@@ -22,6 +23,15 @@
           },
           function() {
             $rootScope.$emit('statisticsDataLoaded');
+
+            ShoppingModel.model.goodsCatalog.length = 0;
+            ShoppingModel.model.newProductName = '';
+            ShoppingModel.model.newProductErrorText = '';
+            ShoppingModel.model.categoriesList.length = 0;
+            ShoppingModel.model.previousShoppingList.length = 0;
+            ShoppingModel.model.actualShoppingListLength = 0;
+            ShoppingModel.model.categoriesTotalCosts.length = 0;
+            ShoppingModel.model.shielduiGridRepository.length = 0;
           }
         );
       }
