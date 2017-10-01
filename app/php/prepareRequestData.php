@@ -14,9 +14,4 @@ function sanitizeMySQL($con, $var) {
     $var = sanitizeString($var);
     return $var;
 }
-
-/* function processInputData($var) {
-    $var = '\''.$var.'\'';
-    return str_replace(array('\n','\r\n'), '', $req[$var]);
-} */
 ?>
