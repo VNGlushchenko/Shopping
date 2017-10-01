@@ -69,58 +69,67 @@
 
     <div class="row">
         <div class="col-sm-3 col-sm-offset-1" style="margin-top:40px;">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <caption class="text-center" style="font-size:18px; font-family:Arial; color:gray;">Расшифровка покупок</caption>
-                    <tr>
-                        <th>№</th>
-                        <th>Название</th>
-                        <th>Сумма</th>
-                    </tr>
-                    <tr ng-repeat="pieChunk in statisticsCtrl.statistics.model.outputStatisticsData.pieChartData | limitTo : statisticsCtrl.statistics.pagination.countPerPage : statisticsCtrl.statistics.pagination.firstRowNumber">
-                        <td>{{$index+1}}</td>
-                        <td>{{pieChunk.name}}</td>
-                        <td>{{pieChunk.y | currency : '&#x20b4;'}}</td>
-                    </tr>
-                </table>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <caption class="text-center" style="font-size:18px; font-family:Arial; color:gray;">Расшифровка покупок</caption>
+                            <tr>
+                                <th>№</th>
+                                <th>Название</th>
+                                <th>Сумма</th>
+                            </tr>
+                            <tr ng-repeat="pieChunk in statisticsCtrl.statistics.model.outputStatisticsData.pieDataTable | limitTo : statisticsCtrl.statistics.pagination.countPerPage : statisticsCtrl.statistics.pagination.firstRowNumber">
+                                <td>{{pieChunk.num}}</td>
+                                <td>{{pieChunk.name}}</td>
+                                <td>{{pieChunk.y | currency : '&#x20b4;'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12 text-center">
+                    <label for="pagination">Показать</label>
+                    <select ng-model="statisticsCtrl.statistics.pagination.countPerPage" ng-change="statisticsCtrl.statistics.pagination.rowCountChange('rowCountPieTable')"
+                        id="pagination">
+                        <option ng-value="10">10</option>
+                        <option ng-value="5">5</option>
+                         <option ng-value="statisticsCtrl.statistics.pagination.rowCountPieTable">все</option>
+                    </select>
+                    <label>строк(и)</label>
+                </div>
+                <div class="col-xs-12 text-center" ng-show="statisticsCtrl.statistics.pagination.countPerPage < statisticsCtrl.statistics.pagination.rowCountPieTable"
+                    style="margin-top:10px;">
+                    <button class="btn btn-sm" style="border-radius: 0;" ng-click="statisticsCtrl.statistics.pagination.previousPage()" ng-disabled="statisticsCtrl.statistics.pagination.currentPage == 1">Назад</button>                    {{statisticsCtrl.statistics.pagination.currentPage}} из {{statisticsCtrl.statistics.pagination.pagesCount}}
+                    <button class="btn btn-sm" style="border-radius: 0;" ng-click="statisticsCtrl.statistics.pagination.nextPage()" ng-disabled="statisticsCtrl.statistics.pagination.pagesCount == statisticsCtrl.statistics.pagination.currentPage">Вперед</button>
+                </div>
+
             </div>
         </div>
 
         <div class="col-sm-3 col-sm-offset-3" style="margin-top:40px;">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <caption class="text-center" style="font-size:18px; font-family:Arial; color:gray;">Динамика покупок</caption>
-                    <tr>
-                        <th>№</th>
-                        <th>Период</th>
-                        <th>Сумма</th>
-                    </tr>
-                    <tr ng-repeat="option in statisticsCtrl.statistics.model.outputStatisticsData.tableDynamicsData">
-                        <td>{{$index+1}}</td>
-                        <td>{{option.period}}</td>
-                        <td>{{option.value | currency : '&#x20b4;'}}</td>
-                    </tr>
-                </table>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <caption class="text-center" style="font-size:18px; font-family:Arial; color:gray;">Динамика покупок</caption>
+                            <tr>
+                                <th>№</th>
+                                <th>Период</th>
+                                <th>Сумма</th>
+                            </tr>
+                            <tr ng-repeat="option in statisticsCtrl.statistics.model.outputStatisticsData.dynamicsDataTable">
+                                <td>{{option.num}}</td>
+                                <td>{{option.period}}</td>
+                                <td>{{option.value | currency : '&#x20b4;'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-sm-3 col-sm-offset-1">
-            <div ng-show="statisticsCtrl.statistics.pagination.countPerPage < statisticsCtrl.statistics.pagination.rowCountPieTable">
-                <button class="btn btm-sm" ng-click="statisticsCtrl.statistics.pagination.previousPage()" ng-disabled="statisticsCtrl.statistics.pagination.currentPage == 1">Назад</button>                {{statisticsCtrl.statistics.pagination.currentPage}} из {{statisticsCtrl.statistics.pagination.pagesCount}}
-                <button class="btn btm-sm" ng-click="statisticsCtrl.statistics.pagination.nextPage()" ng-disabled="statisticsCtrl.statistics.pagination.pagesCount == statisticsCtrl.statistics.pagination.currentPage">Вперед</button>
-            </div>
-            <label for="pagination">Показать</label>
-            <select ng-model="statisticsCtrl.statistics.pagination.countPerPage" ng-change="statisticsCtrl.statistics.pagination.rowCountChange('rowCountPieTable')"
-                id="pagination">
-                <option ng-value="10">10</option>
-                <option ng-value="5">5</option>
-                <option ng-value="statisticsCtrl.statistics.pagination.rowCountPieTable">Все</option>
-            </select>
-            <label>строк(и)</label>
-        </div>
-
     </div>
 </div>
