@@ -31,6 +31,15 @@ $query     = '
                  JOIN tGoodsCategories AS t2 ON t2.category_id = t1.category_id
                  LEFT JOIN tPurchases  AS t3 ON t3.product_id  = t1.product_id
                 WHERE t3.product_id IS NULL
+                UNION ALL
+               SELECT t1.category_id,
+                      t1.category_name,
+                      0,
+                      \' \',
+                      0                AS last_price
+                 FROM tGoodsCategories AS t1
+                 LEFT JOIN tGoods      AS t2 ON t2.category_id = t1.category_id
+                WHERE t2.product_id IS NULL
                 ORDER BY category_name, 
                          product_name
              ';
