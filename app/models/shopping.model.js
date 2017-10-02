@@ -17,7 +17,8 @@
         previousShoppingList: [],
         actualShoppingListLength: 0,
         categoriesTotalCosts: [],
-        shielduiGridRepository: []
+        shielduiGridRepository: [],
+        areShielduiGridDataValid: true
       },
       menu: {
         getAllGoods: getAllGoods,

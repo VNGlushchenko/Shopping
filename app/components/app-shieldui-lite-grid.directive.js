@@ -73,10 +73,15 @@
                       type: String,
                       validator: function(value) {
                         value = +value.replace(',', '.');
-                        return (typeof value === 'number' && isNaN(value)) ||
-                        value <= 0
-                          ? undefined
-                          : +value.toFixed(3);
+                        if (
+                          (typeof value === 'number' && isNaN(value)) ||
+                          value <= 0
+                        ) {
+                          return undefined;
+                        } else {
+                          vm.shopping.model.areShielduiGridDataValid = true;
+                          return +value.toFixed(3);
+                        }
                       }
                     },
                     productPrice: {
@@ -84,10 +89,15 @@
                       type: String,
                       validator: function(value) {
                         value = +value.replace(',', '.');
-                        return (typeof value === 'number' && isNaN(value)) ||
-                        value <= 0
-                          ? undefined
-                          : +value.toFixed(3);
+                        if (
+                          (typeof value === 'number' && isNaN(value)) ||
+                          value <= 0
+                        ) {
+                          return undefined;
+                        } else {
+                          vm.shopping.model.areShielduiGridDataValid = true;
+                          return +value.toFixed(3);
+                        }
                       }
                     },
                     productCost: {
@@ -137,31 +147,40 @@
                       commandName: 'details',
                       caption: 'Сохранить покупки в архив',
                       click: function(e) {
-                        vm.shopping.model.shielduiGridRepository[0].dataSource.data.forEach(
-                          option => {
-                            option.productPrice = +option.productPrice;
-                            option.productUnit = +option.productUnit;
-                          }
-                        );
-                        vm.shopping.menu
-                          .saveSalesReceipt({
-                            salesReceipt:
-                              vm.shopping.model.shielduiGridRepository[0]
-                                .dataSource.data,
-                            salesReceiptId: Date.now(),
-                            timezoneOffset: new Date().getTimezoneOffset()
-                          })
-                          .then(
-                            response => {
-                              $timeout(vm.menu.truncateShoppingList, 0);
-
-                              toastr.success(response.data);
-                            },
-                            error => {
-                              toastr.error(error.data, 'Ошибка!');
-                              console.log(error);
+                        if (
+                          vm.shopping.model.areShielduiGridDataValid == false
+                        ) {
+                          toastr.error(
+                            'Список покупок не сохренен!',
+                            'Ошибка!'
+                          );
+                        } else {
+                          vm.shopping.model.shielduiGridRepository[0].dataSource.data.forEach(
+                            option => {
+                              option.productPrice = +option.productPrice;
+                              option.productUnit = +option.productUnit;
                             }
                           );
+                          vm.shopping.menu
+                            .saveSalesReceipt({
+                              salesReceipt:
+                                vm.shopping.model.shielduiGridRepository[0]
+                                  .dataSource.data,
+                              salesReceiptId: Date.now(),
+                              timezoneOffset: new Date().getTimezoneOffset()
+                            })
+                            .then(
+                              response => {
+                                $timeout(vm.menu.truncateShoppingList, 0);
+
+                                toastr.success(response.data);
+                              },
+                              error => {
+                                toastr.error(error.data, 'Ошибка!');
+                                console.log(error);
+                              }
+                            );
+                        }
                       }
                     }
                   ]
@@ -261,11 +280,13 @@
                   switch (e.path) {
                     case 'productUnit':
                       e.editor.element.addClass('invalid-back invalid-border');
-                      toastr.error('Введите число больше нуля.', 'Ошибка');
+                      vm.shopping.model.areShielduiGridDataValid = false;
+                      toastr.error('Введите число больше нуля.', 'Ошибка!');
                       break;
                     case 'productPrice':
                       e.editor.element.addClass('invalid-back invalid-border');
-                      toastr.error('Введите число больше нуля.', 'Ошибка');
+                      vm.shopping.model.areShielduiGridDataValid = false;
+                      toastr.error('Введите число больше нуля.', 'Ошибка!');
                       break;
                     default:
                       break;
