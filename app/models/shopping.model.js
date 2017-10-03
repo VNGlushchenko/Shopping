@@ -37,7 +37,7 @@
     return vm.shopping;
 
     function getAllGoods() {
-      return $http.get(`${apiUrl}/getGoodsCatalog.php`); //$http.get(`${apiUrl}/goodsCatalog.json`);
+      return $http.get(`${apiUrl}/getGoodsCatalog.php`);
     }
 
     function createNewProduct(data) {

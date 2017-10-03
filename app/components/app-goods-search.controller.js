@@ -9,7 +9,6 @@
     'ShoppingModel',
     '$element',
     '$rootScope',
-    '$scope',
     '$timeout'
   ];
 
@@ -17,7 +16,6 @@
     ShoppingModel,
     $element,
     $rootScope,
-    $scope,
     $timeout
   ) {
     let vm = this;

@@ -45,34 +45,6 @@
 
     return vm.statistics;
 
-    function rowCountChange(rowCountTable) {
-      vm.statistics.pagination.pagesCount = Math.ceil(
-        vm.statistics.pagination[rowCountTable] /
-          vm.statistics.pagination.countPerPage
-      );
-      vm.statistics.pagination.currentPage = 1;
-      vm.statistics.pagination.firstRowNumber = 0;
-    }
-
-    function nextPage() {
-      if (
-        vm.statistics.pagination.pagesCount !=
-        vm.statistics.pagination.currentPage
-      ) {
-        vm.statistics.pagination.currentPage++;
-        vm.statistics.pagination.firstRowNumber +=
-          vm.statistics.pagination.countPerPage;
-      }
-    }
-
-    function previousPage() {
-      if (vm.statistics.pagination.currentPage != 1) {
-        vm.statistics.pagination.currentPage--;
-        vm.statistics.pagination.firstRowNumber -=
-          vm.statistics.pagination.countPerPage;
-      }
-    }
-
     function getStatisticsData(data) {
       return $http.post(`${apiUrl}/getStatisticsData.php`, data);
     }
@@ -200,6 +172,34 @@
       obj.pagination.firstRowNumber = 0;
 
       obj.menu.emitStatisticsDataLoaded();
+    }
+
+    function rowCountChange(rowCountTable) {
+      vm.statistics.pagination.pagesCount = Math.ceil(
+        vm.statistics.pagination[rowCountTable] /
+          vm.statistics.pagination.countPerPage
+      );
+      vm.statistics.pagination.currentPage = 1;
+      vm.statistics.pagination.firstRowNumber = 0;
+    }
+
+    function nextPage() {
+      if (
+        vm.statistics.pagination.pagesCount !=
+        vm.statistics.pagination.currentPage
+      ) {
+        vm.statistics.pagination.currentPage++;
+        vm.statistics.pagination.firstRowNumber +=
+          vm.statistics.pagination.countPerPage;
+      }
+    }
+
+    function previousPage() {
+      if (vm.statistics.pagination.currentPage != 1) {
+        vm.statistics.pagination.currentPage--;
+        vm.statistics.pagination.firstRowNumber -=
+          vm.statistics.pagination.countPerPage;
+      }
     }
   }
 })();

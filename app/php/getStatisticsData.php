@@ -61,17 +61,17 @@ if ($goods_category == 0) {
     //create goods consumption total data - end
     //-----------------------------------------
     //create dynamicsChart data - begin
-    $query_select  = 'SELECT DATE_FORMAT(t3.purchase_date, \'%Y\') AS year,
-                             DATE_FORMAT(t3.purchase_date, \'%c\') AS month,
+    $query_select  = 'SELECT CAST(DATE_FORMAT(t3.purchase_date, \'%Y\') AS UNSIGNED) AS year,
+                             CAST(DATE_FORMAT(t3.purchase_date, \'%c\') AS UNSIGNED) AS month,
                              SUM(t3.cost)     AS total_cost
                         FROM tGoods           AS t1
                         JOIN tGoodsCategories AS t2 ON t2.category_id = t1.category_id
                         JOIN tPurchases       AS t3 ON t3.product_id  = t1.product_id
                        WHERE t3.purchase_date between \''.$date_from.'\' and \''.$date_to.'\'
-                       GROUP BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
-                                DATE_FORMAT(t3.purchase_date, \'%c\')
-                       ORDER BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
-                                DATE_FORMAT(t3.purchase_date, \'%c\')';
+                       GROUP BY CAST(DATE_FORMAT(t3.purchase_date, \'%Y\') AS UNSIGNED),
+                                CAST(DATE_FORMAT(t3.purchase_date, \'%c\') AS UNSIGNED)
+                       ORDER BY CAST(DATE_FORMAT(t3.purchase_date, \'%Y\') AS UNSIGNED),
+                                CAST(DATE_FORMAT(t3.purchase_date, \'%c\') AS UNSIGNED)';
 
     $result_select = mysqli_query($con, $query_select);
 
@@ -145,8 +145,8 @@ if ($goods_category == 0) {
             //create goods consumption total data - end
             //-----------------------------------------
             //create dynamicsChart data - begin
-            $query_select  = 'SELECT DATE_FORMAT(t3.purchase_date, \'%Y\') AS year,
-                                     DATE_FORMAT(t3.purchase_date, \'%c\') AS month,
+            $query_select  = 'SELECT CAST(DATE_FORMAT(t3.purchase_date, \'%Y\') AS UNSIGNED) AS year,
+                                     CAST(DATE_FORMAT(t3.purchase_date, \'%c\') AS UNSIGNED) AS month,
                                      t1.category_name,
                                      SUM(t3.cost)     AS total_cost
                                 FROM tGoodsCategories AS t1
@@ -154,11 +154,11 @@ if ($goods_category == 0) {
                                 JOIN tPurchases       AS t3 ON t3.product_id  = t2.product_id
                                WHERE t3.purchase_date between \''.$date_from.'\' and \''.$date_to.'\'
                                  AND t1.category_id ='.$goods_category.'
-                               GROUP BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
-                                        DATE_FORMAT(t3.purchase_date, \'%c\'),
+                               GROUP BY CAST(DATE_FORMAT(t3.purchase_date, \'%Y\') AS UNSIGNED),
+                                        CAST(DATE_FORMAT(t3.purchase_date, \'%c\') AS UNSIGNED),
                                         t1.category_name
-                               ORDER BY DATE_FORMAT(t3.purchase_date, \'%Y\'),
-                                        DATE_FORMAT(t3.purchase_date, \'%c\'),
+                               ORDER BY CAST(DATE_FORMAT(t3.purchase_date, \'%Y\') AS UNSIGNED),
+                                        CAST(DATE_FORMAT(t3.purchase_date, \'%c\') AS UNSIGNED),
                                         t1.category_name';
 
             $result_select = mysqli_query($con, $query_select);
