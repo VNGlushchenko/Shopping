@@ -125,9 +125,9 @@
                   }
                 ]
               },
-              sorting: {
+              /* sorting: {
                 multiple: true
-              },
+              }, */
               paging: false,
               scrolling: true,
               height: 528,
