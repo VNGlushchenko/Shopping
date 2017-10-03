@@ -5,17 +5,17 @@ The idea of the project is a creation of shopping lists and browsing of purchase
  
 Used frameworks:
 ---------------
-    * AngulaJS;
-    * Angular UI-Router;
-    * Shield UI;
-    * Twitter Bootstrap.
+* AngulaJS;
+* Angular UI-Router;
+* Shield UI;
+* Twitter Bootstrap.
 
 Used libraries:
 ---------------
-    * Angular Toastr;
-    * jQuery;
-    * Highcharts;
-    * Twitter Typeahead.
+* Angular Toastr;
+* jQuery;
+* Highcharts;
+* Twitter Typeahead.
 
     
  
