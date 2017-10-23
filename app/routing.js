@@ -56,17 +56,22 @@
               function submitStatisticsForm() {
                 let isCategoryIdValid = false;
 
-                vm.statistics.model.outputStatisticsData.categoriesList.forEach(
-                  option => {
-                    if (
-                      option.category_id ==
-                      vm.statistics.model.inputStatisticsData.goodsCategory
-                    ) {
-                      isCategoryIdValid = true;
-                      return;
-                    }
+                for (
+                  let i = 0;
+                  i <
+                  vm.statistics.model.outputStatisticsData.categoriesList
+                    .length;
+                  i++
+                ) {
+                  if (
+                    vm.statistics.model.outputStatisticsData.categoriesList[i]
+                      .category_id ==
+                    vm.statistics.model.inputStatisticsData.goodsCategory
+                  ) {
+                    isCategoryIdValid = true;
+                    break;
                   }
-                );
+                }
 
                 if (
                   isCategoryIdValid ||

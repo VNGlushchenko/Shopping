@@ -162,6 +162,7 @@
             for (let i in e.target.attributes) {
               if (e.target.attributes[i].name == 'id') {
                 lastClickedElemId = e.target.attributes[i].value;
+                break;
               }
             }
           }

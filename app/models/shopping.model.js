@@ -150,9 +150,7 @@
     }
 
     function approveShoppingListPieAnimation(oldShoppingList, newShoppingList) {
-      return oldShoppingList.length == 0 && newShoppingList.length == 1
-        ? true
-        : false;
+      return oldShoppingList.length == 0 && newShoppingList.length == 1;
     }
 
     function createActualShoppingListBackup(

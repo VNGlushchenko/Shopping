@@ -59,8 +59,6 @@
                       vm.shopping.model.shielduiGridRepository[0].dataSource
                         .data
                     )
-                      ? true
-                      : false
                   }
                 },
                 series: [
